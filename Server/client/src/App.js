@@ -1,41 +1,32 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+/**
+ * The App component wraps the Main component and the Redux library
+ * to bind the action creators and datastore to properties in the component
+ */
 
-class App extends Component {
-state = {
-    data: null
-  };
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+//import * as actionCreators from '../actions/actionCreators';
+import Main from './Main/Main';
 
-  componentDidMount() {
-      // Call our fetch function below once the component mounts
-    this.callBackendAPI()
-      .then(res => this.setState({ data: res.express }))
-      .catch(err => console.log(err));
-  }
-    // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
-  callBackendAPI = async () => {
-    const response = await fetch('/express_backend');
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message)
-    }
-    return body;
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        // Render the newly fetched data inside of this.state.data
-        <p className="App-intro">{this.state.data}</p>
-      </div>
-    );
-  }
+// These are the properties we'll automatically pass to Main
+/*function mapStateToProps(state) {
+   console.log("State is " + JSON.stringify(state));
+   return {
+      Usrs: state.Usrs,
+      Rds: state.Rds,
+      Errs: state.Errs,
+      Rqts: state.Rqts
+   };
 }
+
+function mapDispatchToProps(dispatch) {
+   return bindActionCreators(actionCreators, dispatch);
+}
+*/
+const App = /*withRouter(connect(
+   mapStateToProps,
+   mapDispatchToProps
+)*/(Main);
 
 export default App;
