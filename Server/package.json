@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "compare app server",
   "main": "main.js",
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
   "scripts": {
     "dev": "nodemon ./server.js",
     "start": "node server.js"
