@@ -2,14 +2,15 @@
   "name": "server",
   "version": "1.0.0",
   "description": "compare app server",
-  "main": "main.js",
+  "main": "server.js",
   "engine": {
     "node": "*",
     "npm": "*"
   },
   "scripts": {
     "dev": "nodemon ./server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Julian Tan",
   "license": "ISC",
