@@ -1,12 +1,14 @@
 import React, { Component, useState, useEffect  } from 'react';
 import Header from './header'
 import Basic from './Basic'
+import UserForm from './UserForm'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import { Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap/';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import './App.css';
+import FileUpload from './components/FileUpload';
 
 function simulateRequest() {
   return new Promise(resolve => setTimeout(resolve, 2000));
@@ -47,7 +49,7 @@ console.log(
   }, [isLoading]);
 
   const handleClick = () => setLoading(true);
-  
+
   return (
     <>
     <Button
@@ -57,7 +59,7 @@ console.log(
     >
       {isLoading ? 'Processing Request…' : 'Click to Process Request'}
     </Button>
-    
+
     <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Personal File Link</Modal.Title>
@@ -86,7 +88,7 @@ state = {
   }
     // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
   callBackendAPI = async () => {
-    const response = await fetch('/express_backend');
+    const response = await fetch('/');
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -102,6 +104,13 @@ state = {
       <Basic />
       <div>
         <FormSelection />
+      </div>
+      <div className='container mt-4'>
+         <h4 className='display-4 text-center mb-4'>
+            <i className='fab fa-react' /> React File Upload
+         </h4>
+
+         <FileUpload />
       </div>
       <div style={{padding:'5px'}}>
       <LoadingButton />
