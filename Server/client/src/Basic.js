@@ -14,22 +14,39 @@ class Basic extends Component {
 
   render() {
 
-    let rgb = []
-        for (var i = 0; i < 3; i++) {
-          let r = Math.floor(Math.random() * 256)
-          rgb.push(r)
-        }
+    // let rgb = []
+    //     for (var i = 0; i < 3; i++) {
+    //       let r = Math.floor(Math.random() * 256)
+    //       rgb.push(r)
+    //     }
 
     var containerStyles = {
-        width: '450px',
-        height: '250px',
+        // width: '710px',
+        width: '90%',
+        minWidth: '710px',
+        height: '160px',
         display: 'inline-block',
       };
 
       var dropboxStyles = {
-        width: '450px',
+        // maxWidth: '950px',
+        // minWidth: '339px',
+        width: '49%',
         height: '250px',
-        backgroundColor: `rgb(${rgb})`,
+        float: 'left',
+        // backgroundColor: `rgb(${rgb})`,
+        backgroundColor: '#007bff',
+        display: 'inline-block',
+      };
+
+      var dropboxStyles2 = {
+        // maxWidth: '950px',
+        // minWidth: '339px',
+        width: '49%',
+        height: '150px',
+        float: 'right',  
+        // backgroundColor: `rgb(${rgb})`,
+        backgroundColor: '#007bff',
         display: 'inline-block',
       };
 
@@ -42,19 +59,30 @@ class Basic extends Component {
     return (
       <Dropzone onDrop={this.onDrop}>
         {({getRootProps, getInputProps}) => (
-          <section className="container" style={containerStyles}>
+          <div className="container" style={containerStyles}>
             <div {...getRootProps({className: 'dropzone'})}>
               <input {...getInputProps()} />
               <p style={dropboxStyles}>
                   
-                  Drag 'n' drop your files here, or click to select files
+                  Drop small txt file here
                   <aside>
                     <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
                     <ul>{files}</ul>
                   </aside>
               </p>
             </div>
-          </section>
+            <div {...getRootProps({className: 'dropzone'})}>
+              <input {...getInputProps()} />
+              <p style={dropboxStyles2}>
+                  
+                  Drop fasta file here
+                  <aside>
+                    <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
+                    <ul>{files}</ul>
+                  </aside>
+              </p>
+            </div>
+          </div>
         )}
       </Dropzone>
     );

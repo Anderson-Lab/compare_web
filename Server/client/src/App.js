@@ -12,6 +12,21 @@ function simulateRequest() {
   return new Promise(resolve => setTimeout(resolve, 2000));
 }
 
+function FastaSelection() {
+  return(
+    <Form>
+        <FormGroup as={Col} controlId="formGridState">
+        <FormLabel>**Preloaded FASTA files**</FormLabel>
+          <FormControl as="select">
+            {/* Add list of Fasta file names form database */}
+          <option>Narwal</option>
+          <option>Mouse</option>
+          </FormControl>
+        </FormGroup>
+    </Form>
+  );
+}
+
 function FormSelection() {
   return(
     <Form>
@@ -99,7 +114,11 @@ state = {
     return (
       <div className = 'App'>
       <Header />
+      
       <Basic />
+      <div style={{ marginLeft: '50%', width: '39%'}}>
+        <FastaSelection />
+      </div>
       <div>
         <FormSelection />
       </div>
