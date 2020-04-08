@@ -1,11 +1,13 @@
-var Express = require('express');
 
-var router = Express.Router({caseSensitive: true});
+exports.profile = function(req, res){
+   console.log("Files.js ----");
+	var message = '';
+	var new_name = req.params.new_name;
+   var sql="SELECT * FROM `Files` WHERE `new_name`='"+new_name+"'";
+   db.query(sql, function(err, result){
+	  if(result.length <= 0)
+	  message = "File not found!";
 
-
-router.baseURL = '/Files';
-router.get("/", (req, res) => {
-   res.status(200).send({express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT'});
-});
-
-module.exports = router;
+     res.render('file.ejs',{data:result, message: message});
+   });
+};

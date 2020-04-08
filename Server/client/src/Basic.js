@@ -5,6 +5,7 @@ class Basic extends Component {
   constructor() {
     super();
     this.onDrop = (files) => {
+      console.log(files[0]);
       this.setState({files})
     };
     this.state = {
@@ -44,9 +45,9 @@ class Basic extends Component {
         {({getRootProps, getInputProps}) => (
           <section className="container" style={containerStyles}>
             <div {...getRootProps({className: 'dropzone'})}>
-              <input {...getInputProps()} />
+              <input {...getInputProps()} name='selectedFile' />
               <p style={dropboxStyles}>
-                  
+
                   Drag 'n' drop your files here, or click to select files
                   <aside>
                     <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>

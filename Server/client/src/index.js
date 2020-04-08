@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 
 // Our own components
 //import { App } from './components/index';
-import App from './App'
+import Main from "./Main";
 
 
 // Register service worker
@@ -27,7 +27,7 @@ import './index.css'; // Our own main stylesheet
    </Provider>
 )*/
 
-const router = <App />;
+const router = <Main />;
 
 ReactDOM.render(router, document.getElementById('root'));
 //registerServiceWorker();
