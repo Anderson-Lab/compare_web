@@ -1,19 +1,11 @@
-import React, { Component, useState, useEffect  } from 'react';
-import Header from './header'
-import Basic from './Basic'
+import React, { Component } from 'react';
 import UserForm from './components/UserForm'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
-import { Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap/';
-import Col from 'react-bootstrap/Col';
-import Modal from 'react-bootstrap/Modal';
 import FetchFileInfo from './components/FetchFileInfo';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  withRouter
+  Route
 } from "react-router-dom";
 
 class Main extends Component {
