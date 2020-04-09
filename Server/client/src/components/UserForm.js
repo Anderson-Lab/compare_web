@@ -28,6 +28,22 @@ function FormSelection() {
  );
 }
 
+function FastaSelection() {
+  return(
+    <Form>
+        <FormGroup as={Col} controlId="formGridState">
+        <FormLabel>**Preloaded FASTA files**</FormLabel>
+          <FormControl as="select">
+            {/* Add list of Fasta file names form database */}
+          <option>Narwal</option>
+          <option>Mouse</option>
+          </FormControl>
+        </FormGroup>
+    </Form>
+  );
+}
+
+
 
 
 class UserForm extends Component {
@@ -62,21 +78,28 @@ class UserForm extends Component {
         this.onFileChange2 = this.onFileChange2.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
-        this.onDrop = (files) => {
+        this.onDrop1 = (files) => {
           console.log(files[0]);
-          if(this.state.selectedFile == '' && this.state.selectedFile2 == ''){
+          console.log(this);
+          if(this.state.selectedFile == ''){
              this.onFileChange(files);
-          }else if (this.state.selectedFile2 == ''){
-             this.onFileChange2(files);
           }else{
              console.log('error occured with upload');
           }
           console.log(this.state);
           console.log(this.state.selectedFile == '');
+        };
+
+        this.onDrop2 = (files) => {
+          console.log(files[0]);
+          console.log(this);
+          if(this.state.selectedFile2 == ''){
+             this.onFileChange2(files);
+          }else{
+             console.log('error occured with upload');
+          }
+          console.log(this.state);
           console.log(this.state.selectedFile2 == '');
-
-
-
         };
         this.state = {
            selectedFile: [],
@@ -132,23 +155,53 @@ class UserForm extends Component {
 
 
   render() {
-     let rgb = []
-         for (var i = 0; i < 3; i++) {
-          let r = Math.floor(Math.random() * 256)
-          rgb.push(r)
-         }
+
+     var containerWrapper = {
+        width: '90%',
+        height: '160px',
+        //background: 'red',
+        margin: '0 auto'
+     }
 
      var containerStyles = {
-         width: '450px',
-         height: '250px',
-         display: 'inline-block',
+        // width: '710px',
+        width: '50%',
+        //minWidth: '710px',
+        height: '250px',
+        //background: 'red',
+        //float: 'left',
+        display: 'inline-block',
+      };
+      var containerStyles2 = {
+        // width: '710px',
+        width: '50%',
+        //minWidth: '710px',
+        height: '150px',
+        //background: 'green',
+        //float: 'left',
+        display: 'inline-block',
       };
 
       var dropboxStyles = {
-         width: '450px',
-         height: '250px',
-         backgroundColor: `rgb(${rgb})`,
-         display: 'inline-block',
+        // maxWidth: '950px',
+        // minWidth: '339px',
+        width: '100%',
+        height: '250px',
+        float: 'left',
+        // backgroundColor: `rgb(${rgb})`,
+        backgroundColor: '#007bff',
+        //display: 'inline-block',
+      };
+
+      var dropboxStyles2 = {
+        // maxWidth: '950px',
+        // minWidth: '339px',
+        width: '100%',
+        height: '150px',
+        float: 'left',
+        // backgroundColor: `rgb(${rgb})`,
+        backgroundColor: '#007bff',
+        //display: 'inline-block',
       };
 
 
@@ -182,19 +235,16 @@ class UserForm extends Component {
     return (
       <div>
          <Header />
+         <form onSubmit={this.onSubmit} style={containerWrapper}>
          <div>
-           <FormSelection />
-         </div>
-         <form onSubmit={this.onSubmit}>
-
-          <Dropzone onDrop={this.onDrop}>
+          <Dropzone onDrop={this.onDrop1} name='txt'>
             {({getRootProps, getInputProps}) => (
               <section className="container" style={containerStyles}>
                 <div {...getRootProps({className: 'dropzone'})}>
                   <input {...getInputProps()} name='selectedFile' onChange={this.onFileChange} />
                   <p style={dropboxStyles}>
 
-                      Drag 'n' drop your files here, or click to select files
+                      Drop small txt file here
                       <aside>
                         <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
                         <ul>{files1}</ul>
@@ -204,14 +254,14 @@ class UserForm extends Component {
               </section>
             )}
           </Dropzone>
-          <Dropzone onDrop={this.onDrop}>
+          <Dropzone onDrop={this.onDrop2} name='fasta'>
             {({getRootProps, getInputProps}) => (
-              <section className="container" style={containerStyles}>
+              <section className="container" style={containerStyles2}>
                 <div {...getRootProps({className: 'dropzone'})}>
                   <input {...getInputProps()} name='selectedFile' onChange={this.onFileChange2}/>
-                  <p style={dropboxStyles}>
+                  <p style={dropboxStyles2}>
 
-                      Drag 'n' drop your files here, or click to select files
+                      Drop fasta file here
                       <aside>
                         <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
                         <ul>{files2}</ul>
@@ -221,6 +271,15 @@ class UserForm extends Component {
               </section>
             )}
           </Dropzone>
+          </div>
+
+          <div style={{ marginLeft: '50%', width: '50%'}}>
+        <FastaSelection />
+      </div>
+      <div>
+        <FormSelection />
+      </div>
+
           <button type="submit">Submit</button>
          </form>
 
