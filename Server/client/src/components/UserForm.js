@@ -20,6 +20,7 @@ function FormSelection() {
         <FormGroup as={Col} controlId="formGridState">
         <FormLabel>Map to..</FormLabel>
           <FormControl as="select">
+          <option>None</option>
           <option>Human</option>
           <option>Mouse</option>
           </FormControl>
@@ -81,11 +82,9 @@ class UserForm extends Component {
         this.onDrop1 = (files) => {
           console.log(files[0]);
           console.log(this);
-          if(this.state.selectedFile == ''){
+
              this.onFileChange(files);
-          }else{
-             console.log('error occured with upload');
-          }
+
           console.log(this.state);
           console.log(this.state.selectedFile == '');
         };
@@ -93,17 +92,16 @@ class UserForm extends Component {
         this.onDrop2 = (files) => {
           console.log(files[0]);
           console.log(this);
-          if(this.state.selectedFile2 == ''){
-             this.onFileChange2(files);
-          }else{
-             console.log('error occured with upload');
-          }
+
+         this.onFileChange2(files);
+
           console.log(this.state);
           console.log(this.state.selectedFile2 == '');
         };
         this.state = {
            selectedFile: [],
            selectedFile2: [],
+           readyToSubmit: false,
            submitted: false,
            uniqueURL: ""
         }
@@ -123,34 +121,39 @@ class UserForm extends Component {
          e.preventDefault()
          console.log(this.state.selectedFile.length)
          console.log(this.state.selectedFile2.length)
-         var formData = new FormData();
-         const tempDate = new Date();
-         const uniqueVal1 = tempDate.getFullYear() + '' + (tempDate.getMonth()+1) + '' + tempDate.getDate() +''+ tempDate.getHours()+''+ tempDate.getMinutes()+''+ tempDate.getSeconds() +''+tempDate.getMilliseconds();
-         for (const key of Object.keys(this.state.selectedFile)) {
-             formData.append('selectedFile', this.state.selectedFile[key], uniqueVal1)
-         }
-         const tempDate2 = new Date();
-         const uniqueVal2 = tempDate2.getFullYear() + '' + (tempDate2.getMonth()+1) + '' + tempDate2.getDate() +''+ tempDate2.getHours()+''+ tempDate2.getMinutes()+''+ tempDate2.getSeconds() +''+tempDate2.getMilliseconds();
-         for (const key of Object.keys(this.state.selectedFile2)) {
-             formData.append('selectedFile', this.state.selectedFile2[key], uniqueVal2)
-         }
-         if(this.state.selectedFile.length > 0 && this.state.selectedFile2.length > 0){
-            this.setState({uniqueURL: "/" + uniqueVal1 + uniqueVal2})
-         }
+         if(this.state.selectedFile.length && this.state.selectedFile2.length){
+            var formData = new FormData();
+            const tempDate = new Date();
+            const uniqueVal1 = tempDate.getFullYear() + '' + (tempDate.getMonth()+1) + '' + tempDate.getDate() +''+ tempDate.getHours()+''+ tempDate.getMinutes()+''+ tempDate.getSeconds() +''+tempDate.getMilliseconds();
+            for (const key of Object.keys(this.state.selectedFile)) {
+                formData.append('selectedFile', this.state.selectedFile[key], uniqueVal1)
+            }
+            const tempDate2 = new Date();
+            const uniqueVal2 = tempDate2.getFullYear() + '' + (tempDate2.getMonth()+1) + '' + tempDate2.getDate() +''+ tempDate2.getHours()+''+ tempDate2.getMinutes()+''+ tempDate2.getSeconds() +''+tempDate2.getMilliseconds();
+            for (const key of Object.keys(this.state.selectedFile2)) {
+                formData.append('selectedFile', this.state.selectedFile2[key], uniqueVal2)
+            }
+            if(this.state.selectedFile.length > 0 && this.state.selectedFile2.length > 0){
+               this.setState({uniqueURL: "/" + uniqueVal1 + uniqueVal2})
+            }
 
-         console.log("Axios");
-         axios.post("/", formData, {
-         }).then(res => {
-             console.log(res)
-         });
+            console.log("Axios");
+            axios.post("/", formData, {
+            }).then(res => {
+                console.log(res)
+            });
 
-         //cheap way out going to change
-         setTimeout(function() { //Start the timer
-            this.setState({submitted: true});
-         }.bind(this), 1000)
+            //cheap way out going to change
+            setTimeout(function() { //Start the timer
+               this.setState({submitted: true});
+            }.bind(this), 1000)
+         }else{
+            alert("not all files selected");
+         }
 
          console.log(this.state);
      }
+
 
 
 
@@ -237,45 +240,44 @@ class UserForm extends Component {
          <Header />
          <form onSubmit={this.onSubmit} style={containerWrapper}>
          <div>
-          <Dropzone onDrop={this.onDrop1} name='txt'>
-            {({getRootProps, getInputProps}) => (
+          <Dropzone onDrop={this.onDrop1} accept='text/csv' id='txt'>
+            {({getRootProps, getInputProps, isDragActive, isDragReject}) => (
               <section className="container" style={containerStyles}>
                 <div {...getRootProps({className: 'dropzone'})}>
                   <input {...getInputProps()} name='selectedFile' onChange={this.onFileChange} />
                   <p style={dropboxStyles}>
+                  <aside>
+                    <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
+                    <ul>{files1}</ul>
+                  </aside>
+                     {!isDragActive && 'Click here or drop a csv file to upload'}
+                     {isDragActive && !isDragReject && 'Drop file'}
+                      {isDragReject && 'File type is not accepted, sorry'}
 
-                      Drop small txt file here
-                      <aside>
-                        <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
-                        <ul>{files1}</ul>
-                      </aside>
                   </p>
                 </div>
               </section>
             )}
           </Dropzone>
-          <Dropzone onDrop={this.onDrop2} name='fasta'>
-            {({getRootProps, getInputProps}) => (
-              <section className="container" style={containerStyles2}>
+          <Dropzone onDrop={this.onDrop2} id='fasta'>
+            {({getRootProps, getInputProps, isDragActive, isDragReject}) => (
+              <section className="container" style={containerStyles}>
                 <div {...getRootProps({className: 'dropzone'})}>
-                  <input {...getInputProps()} name='selectedFile' onChange={this.onFileChange2}/>
-                  <p style={dropboxStyles2}>
-
-                      Drop fasta file here
-                      <aside>
-                        <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
-                        <ul>{files2}</ul>
-                      </aside>
+                  <input {...getInputProps()} name='selectedFile2' onChange={this.onFileChange2}/>
+                  <p style={dropboxStyles}>
+                  <aside>
+                    <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
+                    <ul>{files2}</ul>
+                  </aside>
+                     {!isDragActive && 'Click here or drop a csv file to upload'}
+                     {isDragActive && !isDragReject && 'Drop file'}
+                     {isDragReject && 'File type is not accepted, sorry'}
                   </p>
                 </div>
               </section>
             )}
           </Dropzone>
           </div>
-
-          <div style={{ marginLeft: '50%', width: '50%'}}>
-        <FastaSelection />
-      </div>
       <div>
         <FormSelection />
       </div>
