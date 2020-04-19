@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 const baseURL = "http://localhost:3000/";
 
 class FetchFileInfo extends Component {
@@ -47,6 +47,9 @@ class FetchFileInfo extends Component {
                {this.state.id}
             </div>
             <div>
+               Name of first file: {this.state.new_name1} <br></br>
+               Name of second file: {this.state.new_name2} <br></br>
+               <br></br>
                Type of first file: {this.state.type1} <br></br>
                Type of second file: {this.state.type2} <br></br>
                <br></br>

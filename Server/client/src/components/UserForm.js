@@ -13,71 +13,19 @@ import {
   withRouter
 } from "react-router-dom";
 import FetchFileInfo from './FetchFileInfo';
-
-function FormSelection() {
- return(
-    <Form>
-        <FormGroup as={Col} controlId="formGridState">
-        <FormLabel>Map to..</FormLabel>
-          <FormControl as="select">
-          <option>None</option>
-          <option>Human</option>
-          <option>Mouse</option>
-          </FormControl>
-        </FormGroup>
-    </Form>
- );
-}
-
-function FastaSelection() {
-  return(
-    <Form>
-        <FormGroup as={Col} controlId="formGridState">
-        <FormLabel>**Preloaded FASTA files**</FormLabel>
-          <FormControl as="select">
-            {/* Add list of Fasta file names form database */}
-          <option>Narwal</option>
-          <option>Mouse</option>
-          </FormControl>
-        </FormGroup>
-    </Form>
-  );
-}
+import FetchFromForm from './FetchFromForm';
 
 
 
 
 class UserForm extends Component {
-   /*constructor(props) {
-         super(props);
-
-         this.onFileChange = this.onFileChange.bind(this);
-         this.onFileChange2 = this.onFileChange2.bind(this);
-         this.onSubmit = this.onSubmit.bind(this);
-
-         this.state = {
-             selectedFile: '',
-             selectedFile2: '',
-             submitted: false,
-             uniqueURL: ""
-         }
-         <input
-           type="file"
-           name="selectedFile"
-           onChange={this.onFileChange}
-         />
-         <input
-           type="file"
-           name="selectedFile"
-           onChange={this.onFileChange2}
-         />
-      }*/
 
       constructor() {
         super();
         this.onFileChange = this.onFileChange.bind(this);
         this.onFileChange2 = this.onFileChange2.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
 
         this.onDrop1 = (files) => {
           console.log(files[0]);
@@ -88,6 +36,8 @@ class UserForm extends Component {
           console.log(this.state);
           console.log(this.state.selectedFile == '');
         };
+
+
 
         this.onDrop2 = (files) => {
           console.log(files[0]);
@@ -101,10 +51,18 @@ class UserForm extends Component {
         this.state = {
            selectedFile: [],
            selectedFile2: [],
+           refseqUsed: false,
+           value: '',
            readyToSubmit: false,
            submitted: false,
-           uniqueURL: ""
+           uniqueURL: "",
+           refseqlist: []
         }
+      }
+
+      handleChange(event) {
+        this.setState({value: event.target.value});
+        //axios.get();
       }
 
      onFileChange(e) {
@@ -117,24 +75,41 @@ class UserForm extends Component {
         this.setState({ selectedFile2: e })
      }
 
+     componentDidMount(){
+        fetch("./refseq.json")
+        .then((res) => res.json())
+        .then((data) => this.setState({refseqlist: data}));
+     }
+
      onSubmit(e) {
          e.preventDefault()
+         //testing
          console.log(this.state.selectedFile.length)
          console.log(this.state.selectedFile2.length)
-         if(this.state.selectedFile.length && this.state.selectedFile2.length){
+         console.log(this.state.value);
+
+         //Variables
+         let file1 = this.state.selectedFile;
+         let file2 = this.state.selectedFile2;
+         let refseq = this.state.value;
+
+         //where both files are provided
+         if(file1.length && file2.length && !refseq.length){
             var formData = new FormData();
             const tempDate = new Date();
             const uniqueVal1 = tempDate.getFullYear() + '' + (tempDate.getMonth()+1) + '' + tempDate.getDate() +''+ tempDate.getHours()+''+ tempDate.getMinutes()+''+ tempDate.getSeconds() +''+tempDate.getMilliseconds();
-            for (const key of Object.keys(this.state.selectedFile)) {
-                formData.append('selectedFile', this.state.selectedFile[key], uniqueVal1)
+            for (const key of Object.keys(file1)) {
+                formData.append('selectedFile', file1[key], uniqueVal1)
+                formData.append('refseqUsed', this.state.refseqUsed);
             }
             const tempDate2 = new Date();
             const uniqueVal2 = tempDate2.getFullYear() + '' + (tempDate2.getMonth()+1) + '' + tempDate2.getDate() +''+ tempDate2.getHours()+''+ tempDate2.getMinutes()+''+ tempDate2.getSeconds() +''+tempDate2.getMilliseconds();
-            for (const key of Object.keys(this.state.selectedFile2)) {
-                formData.append('selectedFile', this.state.selectedFile2[key], uniqueVal2)
+            for (const key of Object.keys(file2)) {
+                formData.append('selectedFile', file2[key], uniqueVal2)
             }
-            if(this.state.selectedFile.length > 0 && this.state.selectedFile2.length > 0){
-               this.setState({uniqueURL: "/" + uniqueVal1 + uniqueVal2})
+            if(file1.length > 0 && file2.length > 0){
+               //takes the time submitted of the first file to create unique value
+               this.setState({uniqueURL: "/" + uniqueVal1})
             }
 
             console.log("Axios");
@@ -147,7 +122,39 @@ class UserForm extends Component {
             setTimeout(function() { //Start the timer
                this.setState({submitted: true});
             }.bind(this), 1000)
-         }else{
+         }else if(file1.length && !file2.length && refseq.length){
+            console.log("with selection (must change database to accomidate and add state)");
+            this.setState({refseqUsed: true})
+
+
+            var formData = new FormData();
+            const tempDate = new Date();
+            const uniqueVal1 = tempDate.getFullYear() + '' + (tempDate.getMonth()+1) + '' + tempDate.getDate() +''+ tempDate.getHours()+''+ tempDate.getMinutes()+''+ tempDate.getSeconds() +''+tempDate.getMilliseconds();
+            for (const key of Object.keys(file1)) {
+                formData.append('selectedFile', file1[key], uniqueVal1)
+                formData.append('refseqName', this.state.value);
+                formData.append('refseqUsed', this.state.refseqUsed);
+            }
+
+            if(file1.length > 0 && refseq.length){
+               //takes the time submitted of the first file to create unique value
+               this.setState({uniqueURL: "/" + uniqueVal1})
+            }
+
+            console.log("Axios");
+            axios.post("/", formData, {
+            }).then(res => {
+                console.log(res)
+            });
+
+            //cheap way out going to change
+            setTimeout(function() { //Start the timer
+               this.setState({submitted: true});
+            }.bind(this), 1000)
+         }else if(file1.length && file2.length && refseq.length){
+            alert("Too many fastas selected, can only have one");
+         }
+         else{
             alert("not all files selected");
          }
 
@@ -279,7 +286,17 @@ class UserForm extends Component {
           </Dropzone>
           </div>
       <div>
-        <FormSelection />
+        <Form>
+          <FormGroup as={Col} controlId="formGridState">
+          <FormLabel>Test..</FormLabel>
+             <FormControl as="select" value={this.state.value} onChange={this.handleChange}>
+             <option value=''>None</option>
+             {this.state.refseqlist.map((v) =>
+                (<option value={v.filename}>{v.name}</option>)
+             )}
+             </FormControl>
+          </FormGroup>
+       </Form>
       </div>
 
           <button type="submit">Submit</button>
