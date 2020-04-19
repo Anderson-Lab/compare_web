@@ -11,6 +11,7 @@ const router = require('./Routes/Files.js');
 const { v4: uuidv4 } = require('uuid');
 const url = "http://localhost:3000";
 const mysql = require('mysql');
+const refseq_database = "./refseq_database";
 
 let newFilename = "";
 //connect ot mysql database
@@ -94,19 +95,22 @@ app.post('/', upload.array('selectedFile', 2), (req, res) => {
       */
       console.log(req.body);
       console.log("HERE");
+      console.log("Number of Files: " + req.files.length);
       console.log(req.files);
-      newFilename = req.files[0].filename.split(".")[0] + req.files[1].filename.split(".")[0];
+      //DO I NEED THIS???
+      newFilename = req.files[0].filename.split(".")[0]; //+ req.files[1].filename.split(".")[0];
       if(!req.files){
          console.log("No file recieved");
          message = "Error! in image upload.";
          //res.render('Files', {message, status:'danger'});
-      }else{
-         console.log('file recieved');
+      }else if(req.files.length == 2){
+         console.log('2 files recieved');
          console.log(req.files);
          console.log(req.files[0]);
          console.log(req.files[1]);
-         console.log(req.files[0].originalname + req.files[1].originalname);
+         console.log(req.files[0].originalname);
          var sql = "INSERT INTO `Files`(`fileName1`, `fileName2`, \
+                                        `refseq`, \
                                         `type1`, `type2`, \
                                         `size1`, `size2`, \
                                         `new_name1`, `new_name2`, \
@@ -114,13 +118,14 @@ app.post('/', upload.array('selectedFile', 2), (req, res) => {
                     VALUES ('"
                     + req.files[0].originalname + "', '"
                     + req.files[1].originalname + "', '"
+                    + 0 + "','"
                     + req.files[0].mimetype + "', '"
                     + req.files[1].mimetype + "', '"
                     + req.files[0].size + "', '"
                     + req.files[1].size + "', '"
                     + req.files[0].filename + "', '"
                     + req.files[1].filename + "', '"
-                    + req.files[0].originalname + req.files[1].originalname + "')"
+                    + req.files[0].originalname + "')"
 
          var query = db.query(sql, function(err, result) {
             console.log('inserted file1 and file2 data');
@@ -128,6 +133,36 @@ app.post('/', upload.array('selectedFile', 2), (req, res) => {
 
          message = "Successfully uploaded!";
          //res.render('Files', {message, status:'success'});
+      }else if(req.files.length == 1){
+         console.log("1 file recieved");
+         console.log(req.body.refseqName);
+
+         console.log(req.files[0].originalname);
+         console.log(req.files[0].size);
+         var sql = "INSERT INTO `Files`(`fileName1`, `fileName2`, \
+                                        `refseq`, \
+                                        `type1`, `type2`, \
+                                        `size1`, `size2`, \
+                                        `new_name1`, `new_name2`, \
+                                        `id`) \
+                    VALUES ('"
+                    + req.files[0].originalname + "', '"
+                    + "testoriginalname" + "', '"
+                    + 1 + "', '"
+                    + req.files[0].mimetype + "', '"
+                    + "testmimetype" + "', '"
+                    + req.files[0].size + "', '"
+                    + 123456 + "', '"
+                    + req.files[0].filename + "', '"
+                    + req.body.refseqName + "', '"
+                    + req.files[0].originalname + "')"
+
+         var query = db.query(sql, function(err, result) {
+            console.log('inserted file1 and refseq data');
+         });
+
+      }else{
+         console.log("error, incorrect number of files recieved");
       }
 });
 
@@ -142,6 +177,15 @@ app.get('/:fileId', upload.array('selectedFile', 2), (req,res) => {
       res.send(result);
    });
 });
+
+
+
+/*app.use('/refseq_databases', express.static(__dirname + '/refseq_databases'));
+
+app.get('/refseq/:filename', (req, res) => {
+  const file = `${__dirname}/refseq_databases/${req.params.filename}`;
+  console.log(file);
+});*/
 
 //app.get("/:fileId", filesRouter)
 // App Configuration
