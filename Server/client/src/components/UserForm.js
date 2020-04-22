@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Header from '../header'
 import Dropzone from 'react-dropzone';
+import logo from '../MasterBlaster.png';
 import { Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap/';
 import Col from 'react-bootstrap/Col';
 import {
@@ -177,7 +178,7 @@ class UserForm extends Component {
         // width: '710px',
         width: '50%',
         //minWidth: '710px',
-        height: '250px',
+        height: '180px',
         //background: 'red',
         //float: 'left',
         display: 'inline-block',
@@ -193,25 +194,21 @@ class UserForm extends Component {
       };
 
       var dropboxStyles = {
-        // maxWidth: '950px',
-        // minWidth: '339px',
         width: '100%',
-        height: '250px',
+        height: '180px',
         float: 'left',
-        // backgroundColor: `rgb(${rgb})`,
+        color: '#ffffff',
         backgroundColor: '#007bff',
-        //display: 'inline-block',
+        border: '5px solid',
+        borderRadius: '15px',
+        borderColor: '#007bff'
       };
 
       var dropboxStyles2 = {
-        // maxWidth: '950px',
-        // minWidth: '339px',
         width: '100%',
-        height: '150px',
+        height: '250px',
         float: 'left',
-        // backgroundColor: `rgb(${rgb})`,
         backgroundColor: '#007bff',
-        //display: 'inline-block',
       };
 
 
@@ -245,6 +242,8 @@ class UserForm extends Component {
     return (
       <div>
          <Header />
+         <img src={logo} alt="logo"/>
+          <h1 style={{ color:'#007bff',  textShadow: '-2px 2px #000d1a',}} lassName="App-title">MasterBLASTer</h1>
          <form onSubmit={this.onSubmit} style={containerWrapper}>
          <div>
           <Dropzone onDrop={this.onDrop1} accept='text/csv' id='txt'>
@@ -254,10 +253,10 @@ class UserForm extends Component {
                   <input {...getInputProps()} name='selectedFile' onChange={this.onFileChange} />
                   <p style={dropboxStyles}>
                   <aside>
-                    <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
+                    <h4 style={{textDecorationLine: 'underline', fontSize: 30, color: '#ffffff',}}>TXT File</h4>
                     <ul>{files1}</ul>
                   </aside>
-                     {!isDragActive && 'Click here or drop a csv file to upload'}
+                     {!isDragActive && 'Click here or drop a txt file to upload'}
                      {isDragActive && !isDragReject && 'Drop file'}
                       {isDragReject && 'File type is not accepted, sorry'}
 
@@ -273,10 +272,10 @@ class UserForm extends Component {
                   <input {...getInputProps()} name='selectedFile2' onChange={this.onFileChange2}/>
                   <p style={dropboxStyles}>
                   <aside>
-                    <h4 style={{textDecorationLine: 'underline', fontSize: 30}}>Files</h4>
+                    <h4 style={{textDecorationLine: 'underline', fontSize: 30, color: '#ffffff', }}>FASTA File</h4>
                     <ul>{files2}</ul>
                   </aside>
-                     {!isDragActive && 'Click here or drop a csv file to upload'}
+                     {!isDragActive && 'Click here or drop a fasta file to upload'}
                      {isDragActive && !isDragReject && 'Drop file'}
                      {isDragReject && 'File type is not accepted, sorry'}
                   </p>
@@ -288,9 +287,20 @@ class UserForm extends Component {
       <div>
         <Form>
           <FormGroup as={Col} controlId="formGridState">
-          <FormLabel>Test..</FormLabel>
+          <FormLabel>Available preloaded FASTA files for query...</FormLabel>
              <FormControl as="select" value={this.state.value} onChange={this.handleChange}>
              <option value=''>None</option>
+             {this.state.refseqlist.map((v) =>
+                (<option value={v.filename}>{v.name}</option>)
+             )}
+             </FormControl>
+          </FormGroup>
+       </Form>
+       <Form>
+          <FormGroup as={Col} controlId="formGridState">
+          <FormLabel>Taget...</FormLabel>
+             <FormControl as="select" value={this.state.value} onChange={this.handleChange}>
+             <option value=''>None...</option>
              {this.state.refseqlist.map((v) =>
                 (<option value={v.filename}>{v.name}</option>)
              )}

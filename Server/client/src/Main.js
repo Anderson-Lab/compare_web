@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import UserForm from './components/UserForm'
+import Credits from './components/Credits';
+import Instructions from './components/Instructions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FetchFileInfo from './components/FetchFileInfo';
 import {
@@ -18,6 +20,14 @@ class Main extends Component {
                <Switch>
                   <Route exact path='/'
                   render={() => <UserForm />} />
+                  <Route exact path='/components/Credits'
+                  render={() => <Credits />} />
+                  <Route exact path='/components/Instructions'
+                  render={() => <Instructions />} />
+                  <Route exact path='https://blast.ncbi.nlm.nih.gov/Blast.cgi'
+                  render={() => 'https://blast.ncbi.nlm.nih.gov/Blast.cgi' } />
+                  <Route exact path='https://www.dropzonejs.com/'
+                  render={() => 'https://www.dropzonejs.com/' } />
                   <Route path='/:fileId'
                   render={() => <FetchFileInfo {...this.props} />} />
                </Switch>
