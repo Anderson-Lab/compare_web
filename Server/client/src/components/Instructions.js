@@ -20,7 +20,7 @@ state = {
         {description: 'Upload saved text file (“identifications.txt”), that contains the 275 accessions (with header).', key: 0},
         {description: 'Upload a protein FASTA file that corresponds to the text file species. Or pick from the preloaded options.', key: 1},
         {description: 'If you desire human annotaions, then select human from the target menu.', key: 2},
-        {description: 'Then click submit and a csv file will be produced with the desired annotations.', key: 3}
+        {description: 'Then click submit and a csv file will be produced with the desired annotations. Along with the file will be unique URL that can be visited again to access all the files of the query.', key: 3}
       ];
 
     return (

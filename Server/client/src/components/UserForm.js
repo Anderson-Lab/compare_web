@@ -211,6 +211,13 @@ class UserForm extends Component {
         backgroundColor: '#007bff',
       };
 
+      var dropBoxTitle = {
+        //textDecorationLine: 'underline', 
+        borderBottom: '2px solid white',
+        fontSize: 20, 
+        color: '#ffffff',
+      };
+
 
 
    if (this.state.submitted === true) {
@@ -253,7 +260,7 @@ class UserForm extends Component {
                   <input {...getInputProps()} name='selectedFile' onChange={this.onFileChange} />
                   <p style={dropboxStyles}>
                   <aside>
-                    <h4 style={{textDecorationLine: 'underline', fontSize: 30, color: '#ffffff',}}>TXT File</h4>
+                    <h4 style={ dropBoxTitle }>Query Identifications</h4>
                     <ul>{files1}</ul>
                   </aside>
                      {!isDragActive && 'Click here or drop a txt file to upload'}
@@ -272,7 +279,7 @@ class UserForm extends Component {
                   <input {...getInputProps()} name='selectedFile2' onChange={this.onFileChange2}/>
                   <p style={dropboxStyles}>
                   <aside>
-                    <h4 style={{textDecorationLine: 'underline', fontSize: 30, color: '#ffffff', }}>FASTA File</h4>
+                    <h4 style={ dropBoxTitle }>Query Database</h4>
                     <ul>{files2}</ul>
                   </aside>
                      {!isDragActive && 'Click here or drop a fasta file to upload'}
@@ -287,7 +294,7 @@ class UserForm extends Component {
       <div>
         <Form>
           <FormGroup as={Col} controlId="formGridState">
-          <FormLabel>Available preloaded FASTA files for query...</FormLabel>
+          <FormLabel>Preloaded query databases...</FormLabel>
              <FormControl as="select" value={this.state.value} onChange={this.handleChange}>
              <option value=''>None</option>
              {this.state.refseqlist.map((v) =>
@@ -298,7 +305,7 @@ class UserForm extends Component {
        </Form>
        <Form>
           <FormGroup as={Col} controlId="formGridState">
-          <FormLabel>Taget...</FormLabel>
+          <FormLabel>Target...</FormLabel>
              <FormControl as="select" value={this.state.value} onChange={this.handleChange}>
              <option value=''>None...</option>
              {this.state.refseqlist.map((v) =>

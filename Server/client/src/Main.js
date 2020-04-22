@@ -24,10 +24,6 @@ class Main extends Component {
                   render={() => <Credits />} />
                   <Route exact path='/components/Instructions'
                   render={() => <Instructions />} />
-                  <Route exact path='https://blast.ncbi.nlm.nih.gov/Blast.cgi'
-                  render={() => 'https://blast.ncbi.nlm.nih.gov/Blast.cgi' } />
-                  <Route exact path='https://www.dropzonejs.com/'
-                  render={() => 'https://www.dropzonejs.com/' } />
                   <Route path='/:fileId'
                   render={() => <FetchFileInfo {...this.props} />} />
                </Switch>
