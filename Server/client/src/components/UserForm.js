@@ -181,48 +181,49 @@ class UserForm extends Component {
          margin: '0 auto'
       }
 
-     var containerStyles = {
-        // width: '710px',
-        width: '50%',
-        //minWidth: '710px',
-        height: '180px',
-        //background: 'red',
-        //float: 'left',
-        display: 'inline-block',
+      var containerStyles = {
+         // width: '710px',
+         width: '50%',
+         //minWidth: '710px',
+         height: '180px',
+         //background: 'red',
+         //float: 'left',
+         display: 'inline-block',
       };
+
       var containerStyles2 = {
-        // width: '710px',
-        width: '50%',
-        //minWidth: '710px',
-        height: '150px',
-        //background: 'green',
-        //float: 'left',
-        display: 'inline-block',
+         // width: '710px',
+         width: '50%',
+         //minWidth: '710px',
+         height: '150px',
+         //background: 'green',
+         //float: 'left',
+         display: 'inline-block',
       };
 
       var dropboxStyles = {
-        width: '100%',
-        height: '180px',
-        float: 'left',
-        color: '#ffffff',
-        backgroundColor: '#007bff',
-        border: '5px solid',
-        borderRadius: '15px',
-        borderColor: '#007bff'
+         width: '100%',
+         height: '180px',
+         float: 'left',
+         color: '#ffffff',
+         backgroundColor: '#007bff',
+         border: '5px solid',
+         borderRadius: '15px',
+         borderColor: '#007bff'
       };
 
       var dropboxStyles2 = {
-        width: '100%',
-        height: '250px',
-        float: 'left',
-        backgroundColor: '#007bff',
+         width: '100%',
+         height: '250px',
+         float: 'left',
+         backgroundColor: '#007bff',
       };
 
       var dropBoxTitle = {
-        //textDecorationLine: 'underline', 
-        borderBottom: '2px solid white',
-        fontSize: 20, 
-        color: '#ffffff',
+         //textDecorationLine: 'underline',
+         borderBottom: '2px solid white',
+         fontSize: 20,
+         color: '#ffffff',
       };
 
 
@@ -237,98 +238,6 @@ class UserForm extends Component {
          )
       }
 
-   //displays file name and size for first file
-   const files1 = this.state.selectedFile.map(file => (
-     <li key={file.name}>
-      {file.name} - {file.size} bytes
-     </li>
-   ));
-
-   //displays file name and size for second file
-   const files2 = this.state.selectedFile2.map(file => (
-     <li key={file.name}>
-      {file.name} - {file.size} bytes
-     </li>
-   ));
-
-    const { description, selectedFile } = this.state;
-    return (
-      <div>
-         <Header />
-         <img src={logo} alt="logo"/>
-          <h1 style={{ color:'#007bff',  textShadow: '-2px 2px #000d1a',}} lassName="App-title">MasterBLASTer</h1>
-         <form onSubmit={this.onSubmit} style={containerWrapper}>
-         <div>
-          <Dropzone onDrop={this.onDrop1} accept='text/csv' id='txt'>
-            {({getRootProps, getInputProps, isDragActive, isDragReject}) => (
-              <section className="container" style={containerStyles}>
-                <div {...getRootProps({className: 'dropzone'})}>
-                  <input {...getInputProps()} name='selectedFile' onChange={this.onFileChange} />
-                  <p style={dropboxStyles}>
-                  <aside>
-                    <h4 style={ dropBoxTitle }>Query Identifications</h4>
-                    <ul>{files1}</ul>
-                  </aside>
-                     {!isDragActive && 'Click here or drop a txt file to upload'}
-                     {isDragActive && !isDragReject && 'Drop file'}
-                      {isDragReject && 'File type is not accepted, sorry'}
-
-                  </p>
-                </div>
-              </section>
-            )}
-          </Dropzone>
-          <Dropzone onDrop={this.onDrop2} id='fasta'>
-            {({getRootProps, getInputProps, isDragActive, isDragReject}) => (
-              <section className="container" style={containerStyles}>
-                <div {...getRootProps({className: 'dropzone'})}>
-                  <input {...getInputProps()} name='selectedFile2' onChange={this.onFileChange2}/>
-                  <p style={dropboxStyles}>
-                  <aside>
-                    <h4 style={ dropBoxTitle }>Query Database</h4>
-                    <ul>{files2}</ul>
-                  </aside>
-                     {!isDragActive && 'Click here or drop a fasta file to upload'}
-                     {isDragActive && !isDragReject && 'Drop file'}
-                     {isDragReject && 'File type is not accepted, sorry'}
-                  </p>
-                </div>
-              </section>
-            )}
-          </Dropzone>
-          </div>
-      <div>
-        <Form>
-          <FormGroup as={Col} controlId="formGridState">
-          <FormLabel>Preloaded query databases...</FormLabel>
-             <FormControl as="select" value={this.state.value} onChange={this.handleChange}>
-             <option value=''>None</option>
-             {this.state.refseqlist.map((v) =>
-                (<option value={v.filename}>{v.name}</option>)
-             )}
-             </FormControl>
-          </FormGroup>
-       </Form>
-       <Form>
-          <FormGroup as={Col} controlId="formGridState">
-          <FormLabel>Target...</FormLabel>
-             <FormControl as="select" value={this.state.value} onChange={this.handleChange}>
-             <option value=''>None...</option>
-             {this.state.refseqlist.map((v) =>
-                (<option value={v.filename}>{v.name}</option>)
-             )}
-             </FormControl>
-          </FormGroup>
-       </Form>
-      </div>
-
-          <button type="submit">Submit</button>
-         </form>
-
-      </div>
-    );
-  }
-//------------------------
       //displays file name and size for first file
       const files1 = this.state.selectedFile.map(file => (
          <li key = {file.name}>
@@ -344,9 +253,12 @@ class UserForm extends Component {
       ));
 
       const {description, selectedFile} = this.state;
+
       return (
          <div>
             <Header/>
+            <img src={logo} alt="logo"/>
+            <h1 style={{ color:'#007bff',  textShadow: '-2px 2px #000d1a',}} lassName="App-title">MasterBLASTer</h1>
             <form onSubmit={this.onSubmit} style={containerWrapper}>
                <div>
                   <Dropzone onDrop={this.onDrop1} id='txt'>
@@ -355,12 +267,11 @@ class UserForm extends Component {
                         <div {...getRootProps({className: 'dropzone'})}>
                            <input {...getInputProps()} name='selectedFile' onChange={this.onFileChange}/>
                            <div style={dropboxStyles}>
-                              <h4 style={{textDecorationLine:'underline', fontSize:30}}>Files</h4>
+                              <h4 style={dropBoxTitle}>Query Identifications</h4>
                               <ul>{files1}</ul>
                               {!isDragActive && 'Click here or drop a txt file to upload'}
                               {isDragActive && !isDragReject && 'Drop file'}
                               {isDragReject && 'File type is not accepted, sorry'}
-
                            </div>
                         </div>
                      </section>
@@ -372,7 +283,7 @@ class UserForm extends Component {
                         <div {...getRootProps({className: 'dropzone'})}>
                            <input {...getInputProps()} name='selectedFile2' onChange={this.onFileChange2}/>
                            <div style={dropboxStyles}>
-                              <h4 style={{textDecorationLine:'underline', fontSize:30}}>Files</h4>
+                              <h4 style={dropBoxTitle}>Query Database</h4>
                               <ul>{files2}</ul>
                               {!isDragActive && 'Click here or drop a Fasta file to upload'}
                               {isDragActive && !isDragReject && 'Drop file'}
@@ -385,7 +296,16 @@ class UserForm extends Component {
                </div>
                <div>
                   <FormGroup as={Col} controlId="formGridState">
-                     <FormLabel >Test..< /FormLabel>
+                     <FormLabel >Preloaded query databases...< /FormLabel>
+                     <FormControl as = "select" value = {this.state.value} onChange = {this.handleChange}>
+                        <option value='' key='0'>None</option>
+                        {this.state.refseqlist.map((v) =>
+                           (<option value={v.filename} key={v.id}>{v.name}</option>))
+                        }
+                     </FormControl>
+                  </FormGroup>
+                  <FormGroup as={Col} controlId="formGridState">
+                     <FormLabel >Target...< /FormLabel>
                      <FormControl as = "select" value = {this.state.value} onChange = {this.handleChange}>
                         <option value='' key='0'>None</option>
                         {this.state.refseqlist.map((v) =>
@@ -394,7 +314,6 @@ class UserForm extends Component {
                      </FormControl>
                   </FormGroup>
                </div>
-
                <button type="submit">Submit</button>
             </form>
          </div>
