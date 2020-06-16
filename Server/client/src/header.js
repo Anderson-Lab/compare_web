@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 // import { Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap/';
 import { Navbar, Nav } from 'react-bootstrap/';
-import { NavLink } from 'react-router-dom'
-import logo from './MasterBlaster.png';
 import { Link } from 'react-router-dom';
-import Credits from './components/Credits';
 
 class Header extends Component {
 state = {

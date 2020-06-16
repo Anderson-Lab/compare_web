@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 // import { Navbar, Nav, Form, FormControl, Button} from 'react-bootstrap/';
-import { Navbar, Nav } from 'react-bootstrap/';
-import { NavLink } from 'react-router-dom'
-import { Link } from 'react-router-dom';
 import Header from '../header'
 
 class Instructions extends Component {
@@ -10,11 +7,6 @@ state = {
     data: null,
   };
   render() {
-
-    var titleStyles = {
-        textDecorationLine: 'underline',
-        marginTop: '5',
-      };
 
     const stepList = [
         {description: 'Upload saved text file (“identifications.txt”), that contains the 275 accessions (with header).', key: 0},
