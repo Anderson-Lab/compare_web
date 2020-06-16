@@ -1,0 +1,151 @@
+[{
+      "id": 1,
+      "name": "African Elephant",
+      "filename": "RefSeq_African_elephant_102_GCF_000001905.1_Loxafr3.0_protein.fasta"
+   },
+   {
+      "id": 2,
+      "name": "Beluga",
+      "filename": "RefSeq_Beluga_101_GCF_002288925.2_ASM228892v3_protein.fasta"
+   },
+   {
+      "id": 3,
+      "name": "Bison",
+      "filename": "RefSeq_Bison_100_GCF_000754665.1_Bison_UMD1.0_protein.fasta"
+   },
+   {
+      "id": 4,
+      "name": "Bottlenose Dolphin",
+      "filename": "RefSeq_Bottlenose_dolphin_101_GCF_001922835.1_NIST_Tur_tru_v1_protein.fasta"
+   },
+   {
+      "id": 5,
+      "name": "Brown Bear",
+      "filename": "RefSeq_Brown_bear_100_GCF_003584765.1_ASM358476v1_protein.fasta"
+   },
+   {
+      "id": 6,
+      "name": "Sea Lion",
+      "filename": "RefSeq_CA_sea_lion_100_GCF_900631625.1_zalCal2.2_protein.fasta"
+   },
+   {
+      "id": 7,
+      "name": "Cat",
+      "filename": "RefSeq_Cat_104_GCF_000181335.3_Felis_catus_9.0_protein.fasta"
+   },
+   {
+      "id": 8,
+      "name": "Cheetah",
+      "filename": "RefSeq_Cheetah_101_GCF_003709585.1_Aci_jub_2_protein.fasta"
+   },
+   {
+      "id": 9,
+      "name": "Chimpanzee",
+      "filename": "RefSeq_Chimpanzee_105_GCF_002880755.1_Clint_PTRv2_protein.fasta"
+   },
+   {
+      "id": 10,
+      "name": "Cow",
+      "filename": "RefSeq_Cow_106_GCF_002263795.1_ARS-UCD1.2_protein.fasta"
+   },
+   {
+      "id": 11,
+      "name": "Dog",
+      "filename": "RefSeq_Dog_105_GCF_000002285.3_CanFam3.1_protein.fasta"
+   },
+   {
+      "id": 12,
+      "name": "Florida Manatee",
+      "filename": "RefSeq_FL_manatee_102_GCF_000243295.1_TriManLat1.0_protein.fasta"
+   },
+   {
+      "id": 13,
+      "name": "Goat",
+      "filename": "RefSeq_Goat_102_GCF_001704415.1_ARS1_protein.fasta"
+   },
+   {
+      "id": 14,
+      "name": "Guinea Pig",
+      "filename": "RefSeq_Guinea_pig_103_GCF_000151735.1_Cavpor3.0_protein.fasta"
+   },
+   {
+      "id": 15,
+      "name": "Horse",
+      "filename": "RefSeq_Horse_103_GCF_002863925.1_EquCab3.0_protein.fasta"
+   },
+   {
+      "id": 16,
+      "name": "Human",
+      "filename": "RefSeq_Human_109_GCF_000001405.39_GRCh38.p13_protein.fasta"
+   },
+   {
+      "id": 17,
+      "name": "Mouse",
+      "filename": "RefSeq_Mouse_108_GCF_000001635.26_GRCm38.p6_protein.fasta"
+   },
+   {
+      "id": 18,
+      "name": "Northern Fur Seal",
+      "filename": "RefSeq_N_fur_seal_100_GCF_003265705.1_ASM326570v1_protein.fasta"
+   },
+   {
+      "id": 19,
+      "name": "Narwhal",
+      "filename": "RefSeq_Narwhal_100_GCF_005190385.1_NGI_Narwhal_1_protein.fasta"
+   },
+   {
+      "id": 20,
+      "name": "Pig",
+      "filename": "RefSeq_Pig_106_GCF_000003025.6_Sscrofa11.1_protein.fasta"
+   },
+   {
+      "id": 21,
+      "name": "Polar Bear",
+      "filename": "RefSeq_Polar_bear_100_GCF_000687225.1_UrsMar_1.0_protein.fasta"
+   },
+   {
+      "id": 22,
+      "name": "Przewalskii Horse",
+      "filename": "RefSeq_Przewalskii_horse_100_GCF_000696695.1_Burgud_protein.fasta"
+   },
+   {
+      "id": 23,
+      "name": "Rabbit",
+      "filename": "RefSeq_Rabbit_102_GCF_000003625.3_OryCun2.0_protein.fasta"
+   },
+   {
+      "id": 24,
+      "name": "Rat",
+      "filename": "RefSeq_Rat_106_GCF_000001895.5_Rnor_6.0_protein.fasta"
+   },
+   {
+      "id": 25,
+      "name": "Sheep",
+      "filename": "RefSeq_Sheep_103_GCF_002742125.1_Oar_rambouillet_v1.0_protein.fasta"
+   },
+   {
+      "id": 26,
+      "name": "Steller",
+      "filename": "RefSeq_Steller_100_GCF_004028035.1_ASM402803v1_protein.fasta"
+   },
+   {
+      "id": 27,
+      "name": "Vampire Bat",
+      "filename": "RefSeq_Vampire_Bat_100_GCF_002940915.1_ASM294091v2_protein.fasta"
+   },
+   {
+      "id": 28,
+      "name": "Weddell",
+      "filename": "RefSeq_Weddell_101_GCF_000349705.1_LepWed1.0_protein.fasta"
+   },
+   {
+      "id": 29,
+      "name": "White Rhino",
+      "filename": "RefSeq_White_rhino_101_GCF_000283155.1_CerSimSim1.0_protein.fasta"
+   },
+   {
+      "id": 30,
+      "name": "White-tailed Deer",
+      "filename": "RefSeq_White-tailed_deer_100_GCF_002102435.1_Ovir.te_1.0_protein.fasta"
+   }
+]
