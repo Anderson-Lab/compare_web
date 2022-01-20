@@ -1,6 +1,0 @@
-Mostly Python and Office file exclusions. -PW
-*.bak
-*.pyc
-
-/old_test_versions
-/images/screen_shots
