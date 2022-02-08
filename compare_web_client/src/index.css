@@ -1,0 +1,21 @@
+body {
+    /*background-image: linear-gradient(*/
+    /*        65deg,*/
+    /*        #00000000 16.666%,*/
+    /*        #96CEB4 16.666%,*/
+    /*        #96CEB4 33.333%,*/
+    /*        #FFEEAD 33.333%,*/
+    /*        #FFEEAD 50%,*/
+    /*        #D9534F 50%,*/
+    /*        #D9534F 66.666%,*/
+    /*        #8BC34A 66.666%,*/
+    /*        #8BC34A 83.333%,*/
+    /*        #009688 83.333%*/
+    /*);*/
+    /*background-repeat: repeat;*/
+    background: linear-gradient(45deg, #ff9c6e 0%, #d3adf7 100%);
+}
+
+.title {
+
+}
