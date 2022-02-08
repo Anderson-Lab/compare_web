@@ -3,33 +3,19 @@
 from blaster.models import Widget
 
 from celery import shared_task
-
-
-@shared_task
-def add(x, y):
-    # with open('/Users/augiedoebling/Desktop/tasklog.txt', 'a+') as f:
-    #     f.write(f"adding {x} and {y}")
-
-    return x + y
-
+from django.conf import settings
+from . import db_to_db_blaster, job
 
 @shared_task
-def mul(x, y):
-    return x * y
+def blast(job_id, query_file, hit_file):
+    print('handling blast job', job_id)
+    blast_job = job.Job(job_id)
 
-
-@shared_task
-def xsum(numbers):
-    return sum(numbers)
-
-
-@shared_task
-def count_widgets():
-    return Widget.objects.count()
-
-
-@shared_task
-def rename_widget(widget_id, name):
-    w = Widget.objects.get(id=widget_id)
-    w.name = name
-    w.save()
+    try:    
+        blast_job.started_status()
+        # query, hit = blast_job.get_file_paths()
+        db_to_db_blaster.db_blaster(settings.BLAST_PATH, query_file, hit_file)
+        print('finished blast job')
+        blast_job.completed_status()
+    except Exception as e:
+        blast_job.error_status(e.message)
