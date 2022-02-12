@@ -7,26 +7,27 @@ from . import tasks, job
 def create_blast_job(request):
    try:
 
-      # if request.method == 'POST' and request.FILES['queryFile'] and request.FILES['hitFile']:
-      if request.method == 'POST' and 'queryFile' in request.FILES and 'hitFile' in request.FILES:
+      if request.method == 'POST' and 'identificationsFile' in request.FILES:
          # create job id
          blast_job = job.Job()
          
          # save files to job directory
          blast_job.create_directory()
          # todo: validate files
-         blast_job.save_files(request.FILES['queryFile'], request.FILES['hitFile'])
+         # set which databse files to use
+         blast_job.set_database_files(request.POST['queryDatabase'], request.POST['hitDatabase'])
+         # save the identification file
+         blast_job.save_identifications_file(request.FILES['identificationsFile'])
          
          # queue job task
-         query, hit = blast_job.get_file_paths()
-         tasks.blast.apply_async(args=[blast_job.job_id, query, hit])
+         tasks.blast.apply_async(args=[blast_job.job_id])
          blast_job.queued_status()
 
       else :
          return JsonResponse({
             'success' : False,
             'job_id' : '',
-            'error_message' : 'query and hit files were not detected on the post request'
+            'error_message' : 'identification file was not detected on the post request'
          })
 
 
@@ -40,7 +41,7 @@ def create_blast_job(request):
       return JsonResponse({
             'success' : False,
             'job_id' : '',
-            'error_message' : f'An exception was raised - {e.message}'
+            'error_message' : f'An exception was raised - {e}'
          })
 
 

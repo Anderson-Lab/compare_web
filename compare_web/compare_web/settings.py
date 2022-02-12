@@ -9,6 +9,7 @@ CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
 
 COMPARE_WEB_DATA_DIRECTORY = '/Users/augiedoebling/repos/compare_web/data_directory'
+COMPARE_WEB_FASTA_DIRECTORY = '/Users/augiedoebling/repos/compare_web/testing_files'
 BLAST_PATH = '/usr/local/ncbi/blast/bin'
 
 """

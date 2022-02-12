@@ -1,3 +1,4 @@
+import pickle
 import secrets
 import time
 from django.conf import settings
@@ -9,10 +10,14 @@ class Job:
 
    logger = logging.getLogger(__name__)
 
-   data_directory = settings.COMPARE_WEB_DATA_DIRECTORY
+   job_data_directory = settings.COMPARE_WEB_DATA_DIRECTORY
+   fasta_directory = settings.COMPARE_WEB_FASTA_DIRECTORY
 
-   query_filename = 'QUERY.fasta'
-   hit_filename = 'HIT.fasta'
+   query_filename = ''
+   hit_filename = ''
+
+   identifications_filename = 'identificiations.txt'
+   subset_filename = 'subset.fasta'
 
    status = ''
    message = ''
@@ -23,11 +28,7 @@ class Job:
       self.job_id = secrets.token_hex(32) if id is None else id
 
    def _job_directory(self):
-      return Job.data_directory + '/' + self.job_id
-
-   def get_file_paths(self):
-      dir = self._job_directory()
-      return (dir+'/'+self.query_filename, dir+'/'+self.hit_filename)
+      return Job.job_data_directory + '/' + self.job_id
 
    def create_directory(self):
       directory = self._job_directory()
@@ -42,36 +43,58 @@ class Job:
          logging.exception(f'Could not create directory at {directory}')
          raise
 
-   def save_files(self, query_file, hit_file):
+   def save_identifications_file(self, identifications_file):
       try:
          fs = FileSystemStorage(location=self._job_directory()) 
-         fs.save(self.query_filename, query_file)
-         fs.save(self.hit_filename, hit_file)
-
+         fs.save(self.identifications_filename, identifications_file)
          return True
       except Exception as e:
          return False
 
-   def _write_status(self):
+   def set_database_files(self, query, hit):
+      self.query_filename = query
+      self.hit_filename = hit
+
+   def get_blast_files(self):
+      identifications = self._job_directory() + '/' + Job.identifications_filename
+      query = Job.fasta_directory+'/'+self.query_filename
+      hit = Job.fasta_directory+'/'+self.hit_filename
+
+      return (identifications, query, hit)
+
+   def get_subset_filename(self):
+      return self._job_directory() + '/' + Job.subset_filename
+
+   def save(self):
       try:
-         with open(self._job_directory() + '/status.txt', 'w+') as status_file:
-            status_file.write(f'{self.status}\n')
-            status_file.write(f'{self.success}\n')
-            status_file.write(f'{self.complete}\n')
-            status_file.write(f'{self.message}\n')
+         with open(self._job_directory() + '/status.txt', 'wb+') as status_file:
+            status = {
+               'query_filename': self.query_filename,
+               'hit_filename': self.hit_filename,
+               'status': self.status,
+               'message': self.message,
+               'success': self.success,
+               'complete': self.complete,
+            }
+
+            pickle.dump(status, status_file)
       except Exception as e:
          print('error writing status', e)
-         pass
 
-   def read_status(self):
+   def load(self):
       try:
-         with open(self._job_directory() + '/status.txt', 'r') as status_file:
-            self.status = status_file.readline()
-            self.success = status_file.readline()
-            self.complete = status_file.readline()
-            self.message = status_file.readline()
+         with open(self._job_directory() + '/status.txt', 'rb') as status_file:
+            loaded = pickle.load(status_file)
+            # print('loaded', loaded)
+            self.query_filename = loaded['query_filename']
+            self.hit_filename = loaded['hit_filename']
+            self.status = loaded['status']
+            self.message = loaded['message']
+            self.success = loaded['success']
+            self.complete = loaded['complete']
+
       except Exception as e:
-         pass
+         print('error loading status', e)
 
    
    def error_status(self, message):
@@ -79,26 +102,26 @@ class Job:
       self.message = message
       self.success = False
       self.complete = True
-      self._write_status()
+      self.save()
 
    def queued_status(self):
       self.status = "Queued"
       self.message = "Blast is currently queued for run"
       self.success = True
       self.complete = False
-      self._write_status()
+      self.save()
 
    def started_status(self):
       self.status = "Running"
       self.message = "Blast is currently running"
       self.success = True
       self.complete = False
-      self._write_status()
+      self.save()
 
    def completed_status(self):
       self.status = "Complete"
       self.message = "Blast complete!"
       self.success = True
       self.complete = False
-      self._write_status()
+      self.save()
 
