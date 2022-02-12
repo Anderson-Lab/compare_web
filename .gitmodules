@@ -1,0 +1,3 @@
+[submodule "compare_web/blaster/PAW_BLAST"]
+	path = compare_web/blaster/PAW_BLAST
+	url = git@github.com:AugieDoebling/PAW_BLAST.git
