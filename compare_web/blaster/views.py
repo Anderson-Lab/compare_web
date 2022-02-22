@@ -81,12 +81,15 @@ def get_results(request, format='', job_id=''):
    try:
       blast_job = job.Job(job_id)
 
-      identifications, query, hit = blast_job.get_blast_files()
+      results = blast_job.get_results_file(format)
+      print('results file at', results)
 
 
-      return FileResponse(open(identifications, 'rb'))
+      response = FileResponse(open(results, 'rb'))
 
-      # return serve(request, identifications)
+      response.headers['Content-Type'] = 'application/force-download'
+
+      return response
    except Exception as e:
       print(e)
       return JsonResponse({

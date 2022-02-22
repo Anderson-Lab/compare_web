@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import os
 import logging
+import re
 
 class Job:
 
@@ -64,6 +65,19 @@ class Job:
 
    def get_subset_filename(self):
       return self._job_directory() + '/' + Job.subset_filename
+
+
+   def get_results_file(self, format='xml'):
+      if format == 'xml':
+         re_file_pattern = 'subset_vs_.*.xml'
+      elif format == 'txt':
+         re_file_pattern = 'subset_vs_.*.txt'
+
+      dir = self._job_directory()
+      for _, _, files in os.walk(dir):
+         for file in files:
+            if re.match(re_file_pattern, file):
+               return dir + '/' +file
 
    def save(self):
       try:

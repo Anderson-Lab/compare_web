@@ -49,23 +49,6 @@ export async function GetJobStatus(jobId) {
 }
 
 export async function DownloadResults(jobId, format) {
-    try {
-
-        let formData = new FormData();
-
-        formData.append('job_id', jobId)
-        formData.append('format', format)
-
-        let response = await axios.post("http://localhost:8000/get_results", formData)
-
-        console.log(response.data)
-
-        if (response.data.success) {
-            return response.data
-        }
-
-    }
-    catch (e) {
-
-    }
+    let resultsUrl = `http://localhost:8000/results/${format}/${jobId}`
+    window.open(resultsUrl, '_blank')
 }
