@@ -26,7 +26,7 @@ def blast(job_id):
         # blast the query subset against the target fasta
         db_to_db_blaster.db_blaster(settings.BLAST_PATH, subset_file_name, hit)
 
-        # print('finished blast job')
-        # blast_job.completed_status()
+        print('finished blast job')
+        blast_job.completed_status()
     except Exception as e:
         blast_job.error_status(e.message)

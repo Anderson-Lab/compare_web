@@ -122,6 +122,6 @@ class Job:
       self.status = "Complete"
       self.message = "Blast complete!"
       self.success = True
-      self.complete = False
+      self.complete = True
       self.save()
 

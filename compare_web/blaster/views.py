@@ -1,7 +1,11 @@
-import re
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
+# from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.staticfiles.views import serve
 from . import tasks, job
+
+# def index(request):
+#    return render(request, 'static/index.html')
 
 @csrf_exempt
 def create_blast_job(request):
@@ -48,9 +52,11 @@ def create_blast_job(request):
 @csrf_exempt
 def check_job_status(request):
    try:
-      blast_job = job.Job(request.job_id)
+      job_id = request.POST['job_id']
+      print('checking job', job_id)
+      blast_job = job.Job(job_id)
 
-      blast_job.read_status()
+      blast_job.load()
 
       return JsonResponse({
          'status' : blast_job.status,
@@ -60,9 +66,30 @@ def check_job_status(request):
       })
 
    except Exception as e:
+      print(e)
       return JsonResponse({
          'status' : "Unknown",
          'message' : e.message,
          'complete' : '',
          'success' : '',
       })
+
+@csrf_exempt
+def get_results(request, format='', job_id=''):
+   print('getting results', format, job_id)
+
+   try:
+      blast_job = job.Job(job_id)
+
+      identifications, query, hit = blast_job.get_blast_files()
+
+
+      return FileResponse(open(identifications, 'rb'))
+
+      # return serve(request, identifications)
+   except Exception as e:
+      print(e)
+      return JsonResponse({
+         'status' : "Unknown",
+      })
+   
