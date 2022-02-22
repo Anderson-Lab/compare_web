@@ -21,8 +21,7 @@ export default class FileSelection extends Component {
         // Prevent default behavior (Prevent file from being opened)
         e.preventDefault();
         let file = e.dataTransfer.items[0].getAsFile();
-        this.setState({'identificationsFile': file, 'fileName': file.name})
-        this.props.onChange(file)
+        this.useFile(file)
     }
 
     dragOver = (e) => {
@@ -38,8 +37,10 @@ export default class FileSelection extends Component {
         e.stopPropagation();
         e.preventDefault();
         let file = e.target.files[0];
-        this.setState({'identificationsFile': file, 'fileName': file.name})
+        this.useFile(file)
     }
+
+    useFile = (file) => this.setState({'identificationsFile': file, 'fileName': file.name}, this.props.onChange(file))
 
     remove = (e) => {
         this.setState({'identificationsFile': null, 'fileName': ''})

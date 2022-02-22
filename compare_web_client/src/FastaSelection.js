@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Dropdown} from "semantic-ui-react";
 
 const fastaOptions = [
-    { key : 'narwhal', text: 'narwhal', value: 'narwhal'},
+    { key : 'narwhal', text: 'narwhal', value: 'RefSeq_Narwhal_100_GCF_005190385.1_NGI_Narwhal_1_protein.fasta'},
     { key : 'sealion', text: 'sealion', value: 'sealion'}
 ]
 

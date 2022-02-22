@@ -1,15 +1,9 @@
 import React, {Component} from "react";
 import {Container, Divider, Grid, Header} from "semantic-ui-react";
 import NewBlast from "./NewBlast";
-
+import { Route, Routes } from "react-router-dom";
+import Job from "./Job";
 export default class App extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            mode : 'newBlast',
-        }
-    }
 
   render() {
         return (
@@ -24,7 +18,11 @@ export default class App extends Component {
                 <Grid className='contentBox'>
                     <Grid.Column width={2}/>
                     <Grid.Column width={12}>
-                        {this.state.mode === 'newBlast' ? <NewBlast /> : null}
+                        <Routes>
+                            <Route path='/' element={<NewBlast />}/>
+                            <Route path='/job/:jobId' element={<Job />}/>
+                        </Routes>
+
                     </Grid.Column>
                     <Grid.Column width={2}/>
                 </Grid>
