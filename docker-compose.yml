@@ -1,0 +1,34 @@
+services:
+  client:
+    build:
+      context: .
+      dockerfile: compareWebClient.Dockerfile
+    ports:
+      - "9010:80"
+  api:
+    build:
+      context: .
+      dockerfile: compareWebApi.Dockerfile
+    ports:
+      - "9011:80"
+    volumes:
+      - ./data_directory:/data_directory
+      - ./testing_files:/fasta_files
+    depends_on:
+      - rabbit
+      - celeryworker
+  rabbit:
+    image: 'rabbitmq'
+    ports:
+      - "5672:5672"
+  celeryworker:
+    build:
+      context: .
+      dockerfile: compareWebWorker.Dockerfile
+    volumes:
+      - ./data_directory:/data_directory
+      - ./testing_files:/fasta_files
+    platform: linux/x86_64
+    depends_on:
+      - rabbit
+
