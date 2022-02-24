@@ -1,8 +1,9 @@
+from inspect import trace
 from django.http import JsonResponse, FileResponse
 # from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.staticfiles.views import serve
 from . import tasks, job
+import traceback
 
 # def index(request):
 #    return render(request, 'static/index.html')
@@ -42,6 +43,7 @@ def create_blast_job(request):
             'error_message' : ''
          })
    except Exception as e:
+      print(traceback.format_exc())
       return JsonResponse({
             'success' : False,
             'job_id' : '',
