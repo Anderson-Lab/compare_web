@@ -10,7 +10,7 @@ export async function CreateBlastJob(queryFasta, targetFasta, identificationsFil
 
     try {
 
-        let response = await axios.post("http://localhost:8000/create_blast_job", formData, {
+        let response = await axios.post("http://localhost:9011/create_blast_job", formData, {
             headers : { 'Content-Type': 'multipart/form-data' }
         })
 
@@ -34,7 +34,7 @@ export async function GetJobStatus(jobId) {
 
         formData.append('job_id', jobId)
 
-        let response = await axios.post("http://localhost:8000/check_job_status", formData)
+        let response = await axios.post("http://localhost:9011/check_job_status", formData)
 
         console.log(response.data)
 
@@ -49,6 +49,6 @@ export async function GetJobStatus(jobId) {
 }
 
 export async function DownloadResults(jobId, format) {
-    let resultsUrl = `http://localhost:8000/results/${format}/${jobId}`
+    let resultsUrl = `http://localhost:9011/results/${format}/${jobId}`
     window.open(resultsUrl, '_blank')
 }
