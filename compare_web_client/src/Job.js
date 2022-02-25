@@ -56,22 +56,28 @@ class Job extends Component {
                         <Divider hidden />
                         <Divider />
 
-                        <Grid>
-                            <Grid.Column width={8}>
-                                <Button content='Download as .txt' color='purple'
-                                        fluid icon='download' size='large'
-                                        onClick={this.downloadAsTxt}/>
-                            </Grid.Column>
-                            <Grid.Column width={8}>
-                                <Button content='Download as .xml' color='violet'
-                                        fluid icon='download' size='large'
-                                        onClick={this.downloadAsXml}/>
-                            </Grid.Column>
-                        </Grid>
+                        { !this.state.complete ? null :
+                            <span>
+                                <Grid>
+                                    <Grid.Column width={8}>
+                                        <Button content='Download as .txt' color='purple'
+                                                fluid icon='download' size='large'
+                                                onClick={this.downloadAsTxt}/>
+                                    </Grid.Column>
+                                    <Grid.Column width={8}>
+                                        <Button content='Download as .xml' color='violet'
+                                                fluid icon='download' size='large'
+                                                onClick={this.downloadAsXml}/>
+                                    </Grid.Column>
+                                </Grid>
 
-                        <Divider hidden />
+                                <Divider hidden />
+                            </span> }
+
+
 
                         <Button content='Start New Blast' color='blue' basic fluid size='large' onClick={this.startNewJob}/>
+
                     </span>}
 
             </Segment>
