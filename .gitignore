@@ -1,12 +1,12 @@
 # compare web directories
 data_directory/*
-# testing_files/*.pdb
-# testing_files/*.phr
-# testing_files/*.pin
-# testing_files/*.pot
-# testing_files/*.psq
-# testing_files/*.ptf
-# testing_files/*.pto
+*.pdb
+*.phr
+*.pin
+*.pot
+*.psq
+*.ptf
+*.pto
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
