@@ -13,7 +13,7 @@ services:
       - "9011:80"
     volumes:
       - ./data_directory:/data_directory
-      - ./testing_files:/fasta_files
+      - ./refseq_databases:/fasta_files
     depends_on:
       - rabbit
       - celeryworker
@@ -27,8 +27,11 @@ services:
       dockerfile: compareWebWorker.Dockerfile
     volumes:
       - ./data_directory:/data_directory
-      - ./testing_files:/fasta_files
+      - ./refseq_databases:/fasta_files
     platform: linux/x86_64
     depends_on:
       - rabbit
+    deploy:
+      mode: replicated
+      replicas: 2
 
