@@ -29,4 +29,4 @@ def blast(job_id):
         print('finished blast job')
         blast_job.completed_status()
     except Exception as e:
-        blast_job.error_status(e.message)
+        blast_job.error_status(f"Unexpected exception {e=}")
