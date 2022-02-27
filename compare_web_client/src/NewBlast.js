@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Button, Divider, Grid, Header, Segment} from "semantic-ui-react";
 import FastaSelection from "./FastaSelection";
 import FileSelection from "./FileSelection";
-import {CreateBlastJob} from "./apis/backend";
+import {CreateBlastJob, GetAvailableDatabases} from "./apis/backend";
 
 export default class NewBlast extends Component {
     constructor(props) {
@@ -12,7 +12,9 @@ export default class NewBlast extends Component {
             queryFasta: '',
             targetFasta: '',
             identificationsFile: null,
-            loading : false
+            loading : false,
+            fastaDatabases : [],
+            fastaLoaded : false,
         }
     }
 
@@ -24,6 +26,12 @@ export default class NewBlast extends Component {
 
             }))
 
+    componentDidMount() {
+        GetAvailableDatabases().then(databases => this.setState({
+            fastaDatabases : databases.map(db => ({key : db.species+db.version, text : `${db.species} (v.${db.version})`, value : db.filename})),
+            fastaLoaded : true
+        }))
+    }
 
 
     render() {
@@ -43,10 +51,12 @@ export default class NewBlast extends Component {
                 </Grid>
 
                 <Header content='2. Select Query Fasta' dividing color='violet'/>
-                <FastaSelection name='queryFasta' onChange={this.onFastaChange} placeholder='Query Fasta'/>
+                <FastaSelection name='queryFasta' onChange={this.onFastaChange} placeholder='Query Fasta'
+                                fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
 
                 <Header content='3. Target Fasta' dividing color='violet'/>
-                <FastaSelection name='targetFasta' onChange={this.onFastaChange} placeholder='Target Fasta'/>
+                <FastaSelection name='targetFasta' onChange={this.onFastaChange} placeholder='Target Fasta'
+                                fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
 
                 <Divider hidden/>
 

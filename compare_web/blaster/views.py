@@ -2,6 +2,7 @@ from inspect import trace
 from django.http import JsonResponse, FileResponse
 # from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from blaster.fastas import Fastas
 from . import tasks, job
 import traceback
 
@@ -74,6 +75,23 @@ def check_job_status(request):
          'message' : e.message,
          'complete' : '',
          'success' : '',
+      })
+
+@csrf_exempt
+def available_databases(request):
+   print('getting databases')
+
+   try:
+      fastas = Fastas()
+      databases = fastas.get_databases()
+
+      return JsonResponse({
+         'databases' : databases
+      })
+   except Exception as e:
+      print(e)
+      return JsonResponse({
+         'databases' : [],
       })
 
 @csrf_exempt

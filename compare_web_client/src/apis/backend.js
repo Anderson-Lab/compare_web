@@ -48,6 +48,19 @@ export async function GetJobStatus(jobId) {
     }
 }
 
+export async function GetAvailableDatabases() {
+    try {
+        let response = await axios.get("http://localhost:9011/available_databases")
+
+        console.log('available db response', response.data)
+        return response.data.databases
+    }
+    catch (e) {
+        console.error(e)
+        return []
+    }
+}
+
 export async function DownloadResults(jobId, format) {
     let resultsUrl = `http://localhost:9011/results/${format}/${jobId}`
     window.open(resultsUrl, '_blank')

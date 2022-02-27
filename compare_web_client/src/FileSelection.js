@@ -1,11 +1,6 @@
 import React, {Component} from "react";
 import {Button, Divider, Header, Icon, Segment} from "semantic-ui-react";
 
-const fastaOptions = [
-    {key: 'narwhal', text: 'narwhal', value: 'narwhal'},
-    {key: 'sealion', text: 'sealion', value: 'sealion'}
-]
-
 export default class FileSelection extends Component {
     constructor(props) {
         super(props);
