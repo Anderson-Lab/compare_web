@@ -8,13 +8,14 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+COPY compare_web/requirements.txt /app/
+# install pip requirements
+RUN python -m pip install -r /app/requirements.txt
+
 # copy django application
 COPY compare_web/ /app
 # overwrite settings file with prodcution settings file
 COPY compare_web/compare_web/settings_production.py /app/compare_web/settings.py
-
-# install pip requirements
-RUN python -m pip install -r /app/requirements.txt
 
 # application entry point
 CMD [ "python", "./manage.py", "runserver", "0.0.0.0:80"] 
