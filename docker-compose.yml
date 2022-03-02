@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: compareWebClient.Dockerfile
     ports:
-      - "9010:80"
+      - "9012:80"
   api:
     build:
       context: .
