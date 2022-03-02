@@ -10,7 +10,7 @@ export async function CreateBlastJob(queryFasta, targetFasta, identificationsFil
 
     try {
 
-        let response = await axios.post("http://localhost:9011/create_blast_job", formData, {
+        let response = await axios.post("https://birg.dev/masterblasterapi/create_blast_job", formData, {
             headers : { 'Content-Type': 'multipart/form-data' }
         })
 
@@ -34,7 +34,7 @@ export async function GetJobStatus(jobId) {
 
         formData.append('job_id', jobId)
 
-        let response = await axios.post("http://localhost:9011/check_job_status", formData)
+        let response = await axios.post("https://birg.dev/masterblasterapi/check_job_status", formData)
 
         console.log(response.data)
 
@@ -50,7 +50,7 @@ export async function GetJobStatus(jobId) {
 
 export async function GetAvailableDatabases() {
     try {
-        let response = await axios.get("http://localhost:9011/available_databases")
+        let response = await axios.get("https://birg.dev/masterblasterapi/available_databases")
 
         console.log('available db response', response.data)
         return response.data.databases
