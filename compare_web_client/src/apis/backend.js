@@ -16,7 +16,7 @@ export async function CreateBlastJob(queryFasta, targetFasta, identificationsFil
 
         if (response.data.success) {
             let job_id = response.data['job_id']
-            window.location.href = '/job/'+job_id
+            window.location.href = '/masterblaster/job/'+job_id
             return true
         }
 
@@ -62,6 +62,6 @@ export async function GetAvailableDatabases() {
 }
 
 export async function DownloadResults(jobId, format) {
-    let resultsUrl = `http://localhost:9011/results/${format}/${jobId}`
+    let resultsUrl = `https://birg.dev/masterblasterapi/results/${format}/${jobId}`
     window.open(resultsUrl, '_blank')
 }
