@@ -20,4 +20,7 @@ This application is a web hosted port of the [PAW_BLASTER](https://github.com/pw
 
 ### Running
 
-`docker-compose -d up`
+_Checkout the PAW_BLAST Submodule_
+`git submodule update --init`
+_Run docker compose up_
+`docker-compose up -d --build`
