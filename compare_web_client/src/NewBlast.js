@@ -54,7 +54,7 @@ export default class NewBlast extends Component {
                 <FastaSelection name='queryFasta' onChange={this.onFastaChange} placeholder='Query Fasta'
                                 fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
 
-                <Header content='3. Target Fasta' dividing color='violet'/>
+                <Header content='3. Select Reference Fasta' dividing color='violet'/>
                 <FastaSelection name='targetFasta' onChange={this.onFastaChange} placeholder='Target Fasta'
                                 fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
 
