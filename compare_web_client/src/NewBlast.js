@@ -28,7 +28,7 @@ export default class NewBlast extends Component {
 
     componentDidMount() {
         GetAvailableDatabases().then(databases => this.setState({
-            fastaDatabases : databases.map(db => ({key : db.species+db.version, text : `${db.species} (v.${db.version})`, value : db.filename})),
+            fastaDatabases : databases.map(db => ({key : db.name, text : db.name, value : db.filename})),
             fastaLoaded : true
         }))
     }
