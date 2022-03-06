@@ -44,10 +44,10 @@ export default class FileSelection extends Component {
 
     render() {
         return (
-            <Segment placeholder onDrop={this.queryFileDrop} onDragOver={this.dragOver}>
+            <Segment placeholder onDrop={this.queryFileDrop} onDragOver={this.dragOver} size='small'>
                 <Header icon>
                     <Icon name='file alternate outline'/>
-                    {!this.state.fileName ? 'Drag file here' : this.state.fileName}
+                    {!this.state.fileName ? 'Drag File Here' : this.state.fileName}
 
                 </Header>
 

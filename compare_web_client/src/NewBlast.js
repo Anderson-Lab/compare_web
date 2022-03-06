@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Divider, Grid, Header, Segment} from "semantic-ui-react";
+import {Button, Container, Divider, Header, Segment} from "semantic-ui-react";
 import FastaSelection from "./FastaSelection";
 import FileSelection from "./FileSelection";
 import {CreateBlastJob, GetAvailableDatabases} from "./apis/backend";
@@ -15,16 +15,20 @@ export default class NewBlast extends Component {
             loading : false,
             fastaDatabases : [],
             fastaLoaded : false,
+            mode : 'existing'
         }
     }
+
+    setMode = (mode) => this.setState({mode})
 
     onFastaChange = (e, {value, name}) => this.setState({[name]: value})
     onFileChange = (file) => this.setState({'identificationsFile': file})
 
     createBlast = () => this.setState({loading : true},
-            () => CreateBlastJob(this.state.queryFasta, this.state.targetFasta, this.state.identificationsFile).then(result => {
+            () => CreateBlastJob(this.state.queryFasta, this.state.targetFasta, this.state.identificationsFile)
+                .then(result => {
 
-            }))
+                }))
 
     componentDidMount() {
         GetAvailableDatabases().then(databases => this.setState({
@@ -33,7 +37,6 @@ export default class NewBlast extends Component {
         }))
     }
 
-
     render() {
         return (
             <Segment raised padded>
@@ -41,22 +44,39 @@ export default class NewBlast extends Component {
                 <Header content='Create New Blast' size='large' color='blue'/>
 
                 <Header content='1. Upload Identifications File' dividing color='violet'/>
+                <FileSelection onChange={this.onFileChange}/>
 
-                <Grid>
-                    <Grid.Column width={4}/>
-                    <Grid.Column width={8}>
-                        <FileSelection onChange={this.onFileChange}/>
-                    </Grid.Column>
-                    <Grid.Column width={4}/>
-                </Grid>
+                <Header content='2. Select Fasta Databases' dividing color='violet'/>
 
-                <Header content='2. Select Query Fasta' dividing color='violet'/>
-                <FastaSelection name='queryFasta' onChange={this.onFastaChange} placeholder='Query Fasta'
-                                fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
+                <Button.Group fluid size='large'>
+                    <Button color={this.state.mode === 'existing' ? 'violet' : null}
+                            icon='list' content='Use Existing Fasta' onClick={() => this.setMode('existing')}/>
+                    <Button.Or />
+                    <Button color={this.state.mode === 'upload' ? 'violet' : null}
+                            icon='upload' content='Use My Own Fasta' onClick={() => this.setMode('upload')}/>
+                  </Button.Group>
 
-                <Header content='3. Select Reference Fasta' dividing color='violet'/>
-                <FastaSelection name='targetFasta' onChange={this.onFastaChange} placeholder='Target Fasta'
-                                fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
+                {this.state.mode === 'existing'
+                    ? <Segment>
+                        <Header content='Select Query Fasta' dividing color='purple' size='small'/>
+                        <FastaSelection name='queryFasta' onChange={this.onFastaChange} placeholder='Query Fasta'
+                                        fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
+
+                        <Header content='Select Reference Fasta' dividing color='purple' size='small'/>
+                        <FastaSelection name='targetFasta' onChange={this.onFastaChange} placeholder='Reference Fasta'
+                                        fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
+                    </Segment>
+                    : <Segment>
+                        <Header content='Coming Soon!' textAlign='center' disabled/>
+
+                        <Container textAlign='center' text>
+                            Ability to upload your own Fasta databases is coming soon.
+                            In the meantime, if you have a specific database you would like us to add,
+                            please email us at <a href='mailto:pander14@calpoly.edu'>pander14@calpoly.edu</a>.
+                        </Container>
+
+
+                    </Segment>}
 
                 <Divider hidden/>
 
