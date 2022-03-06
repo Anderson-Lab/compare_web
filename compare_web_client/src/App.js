@@ -10,7 +10,7 @@ export default class App extends Component {
         <div className="App">
             <Container style={{marginTop: '2em'}}>
                 <div className='title'>
-                    <Header content='Compare Web' size='huge' inverted />
+                    <Header content='Master Blaster' size='huge' inverted />
                 </div>
 
                 <Divider hidden />
