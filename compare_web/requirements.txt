@@ -31,3 +31,5 @@ vine==5.0.0
 wcwidth==0.2.5
 whitenoise==6.0.0
 yarl==1.7.2
+pandas==1.2.1
+openpyxl==3.0.9

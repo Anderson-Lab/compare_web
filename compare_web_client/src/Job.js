@@ -35,6 +35,7 @@ class Job extends Component {
 
     downloadAsXml = () => DownloadResults(this.props.params.jobId, 'xml')
     downloadAsTxt = () => DownloadResults(this.props.params.jobId, 'txt')
+    downloadAsXlsx = () => DownloadResults(this.props.params.jobId, 'xlsx')
 
     render() {
         return (
@@ -59,12 +60,17 @@ class Job extends Component {
                         { !this.state.complete ? null :
                             <span>
                                 <Grid>
-                                    <Grid.Column width={8}>
+                                    <Grid.Column width={5}>
+                                        <Button content='Download as .xlsx' color='blue'
+                                                fluid icon='download' size='large'
+                                                onClick={this.downloadAsXlsx}/>
+                                    </Grid.Column>
+                                    <Grid.Column width={5}>
                                         <Button content='Download as .txt' color='purple'
                                                 fluid icon='download' size='large'
                                                 onClick={this.downloadAsTxt}/>
                                     </Grid.Column>
-                                    <Grid.Column width={8}>
+                                    <Grid.Column width={5}>
                                         <Button content='Download as .xml' color='violet'
                                                 fluid icon='download' size='large'
                                                 onClick={this.downloadAsXml}/>
