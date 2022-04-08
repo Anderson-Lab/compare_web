@@ -10,8 +10,8 @@ WORKDIR /app
 # copy backend application
 COPY compare_web/ /app/
 
-# copy blast
-COPY ncbi-blast-2.12.0+/ /usr/local/ncbi/blast/bin
+# copy flashfry
+COPY FlashFry-assembly-1.12.jar /usr/local/flashfry
 
 # install pip requirements
 RUN python -m pip install -r /app/requirements.txt
