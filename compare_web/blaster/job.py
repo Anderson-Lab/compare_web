@@ -14,10 +14,10 @@ class Job:
    job_data_directory = settings.COMPARE_WEB_DATA_DIRECTORY
    fasta_directory = settings.COMPARE_WEB_FASTA_DIRECTORY
 
-   query_filename = ''
-   hit_filename = ''
+   genome_filename = ''
+   chromosome_filename = ''
 
-   identifications_filename = 'identificiations.txt'
+   identifications_filename = 'fastaFile.txt'
    subset_filename = 'subset.fasta'
 
    status = ''
@@ -25,12 +25,15 @@ class Job:
    success = False
    complete = False
 
+   # Generate a job ID
    def __init__(self, id=None):
       self.job_id = secrets.token_hex(32) if id is None else id
 
+   # Generate a path for a job directory
    def _job_directory(self):
       return Job.job_data_directory + '/' + self.job_id
 
+   # Create a directory to hold the files related to a job
    def create_directory(self):
       directory = self._job_directory()
       self.logger.debug(f'creating directory for job {self.job_id} at {directory}')
@@ -44,6 +47,7 @@ class Job:
          logging.exception(f'Could not create directory at {directory}')
          raise
 
+   # Save the uploaded file to the directory with all the job files
    def save_identifications_file(self, identifications_file):
       try:
          fs = FileSystemStorage(location=self._job_directory()) 
@@ -52,21 +56,25 @@ class Job:
       except Exception as e:
          return False
 
-   def set_database_files(self, query, hit):
-      self.query_filename = query
-      self.hit_filename = hit
+   # Set database files in directory
+   def set_database_files(self, genome, chromosome):
+      self.genome_filename = genome
+      self.chromosome_filename = chromosome
 
+   # getter to access all user inputed data
    def get_blast_files(self):
       identifications = self._job_directory() + '/' + Job.identifications_filename
-      query = Job.fasta_directory+'/'+self.query_filename
-      hit = Job.fasta_directory+'/'+self.hit_filename
+      genome = Job.fasta_directory+'/'+self.genome_filename
+      chromosome = Job.fasta_directory+'/'+self.chromosome_filename
 
-      return (identifications, query, hit)
+      return (identifications, genome, chromosome)
 
+   # TODO: Maybe remove this.
    def get_subset_filename(self):
       return self._job_directory() + '/' + Job.subset_filename
 
 
+   # Actual results file after algorithm is run
    def get_results_file(self, format='xml'):
       if format == 'xml':
          re_file_pattern = 'subset_vs_.*.xml'
@@ -86,12 +94,13 @@ class Job:
                   df.to_excel(dir + '/' + file,index=False)
                return dir + '/' +file
 
+   # Save all the inputted files to directory
    def save(self):
       try:
          with open(self._job_directory() + '/status.txt', 'wb+') as status_file:
             status = {
-               'query_filename': self.query_filename,
-               'hit_filename': self.hit_filename,
+               'genome_filename': self.genome_filename,
+               'chromosome_filename': self.chromosome_filename,
                'status': self.status,
                'message': self.message,
                'success': self.success,
@@ -107,8 +116,8 @@ class Job:
          with open(self._job_directory() + '/status.txt', 'rb') as status_file:
             loaded = pickle.load(status_file)
             # print('loaded', loaded)
-            self.query_filename = loaded['query_filename']
-            self.hit_filename = loaded['hit_filename']
+            self.genome_filename = loaded['genome_filename']
+            self.chromosome_filename = loaded['chromosome_filename']
             self.status = loaded['status']
             self.message = loaded['message']
             self.success = loaded['success']
@@ -117,7 +126,7 @@ class Job:
       except Exception as e:
          print('error loading status', e)
 
-   
+   # STATUSES OF JOBS
    def error_status(self, message):
       self.status = "Error"
       self.message = message

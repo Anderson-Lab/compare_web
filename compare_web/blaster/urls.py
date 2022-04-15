@@ -5,8 +5,8 @@ from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
-    path('masterblasterapi/create_blast_job', views.create_blast_job, name='create_blast_job'),
-    path('masterblasterapi/check_job_status', views.check_job_status, name='check_job_status'),
-    path('masterblasterapi/available_databases', views.available_databases, name='available_databases'),
-    path('masterblasterapi/results/<slug:format>/<slug:job_id>', views.get_results, name='get_results'),
+    path('crisprstreamlineapi/create_streamline_job', views.create_streamline_job, name='create_streamline_job'),
+    path('crisprstreamlineapi/check_job_status', views.check_job_status, name='check_job_status'),
+    path('crisprstreamlineapi/available_databases', views.available_databases, name='available_databases'),
+    path('crisprstreamlineapi/results/<slug:format>/<slug:job_id>', views.get_results, name='get_results'),
 ]

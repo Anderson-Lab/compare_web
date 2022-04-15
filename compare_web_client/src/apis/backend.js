@@ -1,22 +1,22 @@
 import axios from "axios";
 
-export async function CreateBlastJob(queryFasta, targetFasta, identificationsFile) {
+export async function CreateStreamlineJob(referenceGenome, referenceChromosome, fastaFile) {
     let formData = new FormData();
 
-    formData.append('queryDatabase', queryFasta)
-    formData.append('hitDatabase', targetFasta)
-    formData.append('identificationsFile', identificationsFile)
+    formData.append('referenceGenome', referenceGenome)
+    formData.append('referenceChromosome', referenceChromosome)
+    formData.append('fastaFile', fastaFile)
 
 
     try {
 
-        let response = await axios.post("https://birg.dev/masterblasterapi/create_blast_job", formData, {
+        let response = await axios.post("https://birg.dev/crisprstreamlineapi/create_streamline_job", formData, {
             headers : { 'Content-Type': 'multipart/form-data' }
         })
 
         if (response.data.success) {
             let job_id = response.data['job_id']
-            window.location.href = '/masterblaster/job/'+job_id
+            window.location.href = '/crisprstreamline/job/'+job_id
             return true
         }
 
@@ -34,7 +34,7 @@ export async function GetJobStatus(jobId) {
 
         formData.append('job_id', jobId)
 
-        let response = await axios.post("https://birg.dev/masterblasterapi/check_job_status", formData)
+        let response = await axios.post("https://birg.dev/crisprstreamlineapi/check_job_status", formData)
 
         console.log(response.data)
 
@@ -48,9 +48,10 @@ export async function GetJobStatus(jobId) {
     }
 }
 
+/*TODO: Modify these functions so they reflect the nature of our outputs.*/
 export async function GetAvailableDatabases() {
     try {
-        let response = await axios.get("https://birg.dev/masterblasterapi/available_databases")
+        let response = await axios.get("https://birg.dev/crisprstreamlineapi/available_databases")
 
         console.log('available db response', response.data)
         return response.data.databases
@@ -62,6 +63,6 @@ export async function GetAvailableDatabases() {
 }
 
 export async function DownloadResults(jobId, format) {
-    let resultsUrl = `https://birg.dev/masterblasterapi/results/${format}/${jobId}`
+    let resultsUrl = `https://birg.dev/crisprstreamlineapi/results/${format}/${jobId}`
     window.open(resultsUrl, '_blank')
 }
