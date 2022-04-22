@@ -5,7 +5,7 @@ This application is a web hosted port of the [PAW_BLASTER](https://github.com/pw
 ### Backend Application Request Flow
 ** For devs **
 
-1. `/create_blast_job`
+1. `/create_streamline_job`
    - Payload contains identification file
    - Saves files under folder named `job_id`
    - Returns upload success and `job_id`
