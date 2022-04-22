@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Dropdown} from "semantic-ui-react";
 
-export default class FastaSelection extends Component {
+export default class GenomeSelection extends Component {
     render() {
         return (
             <Dropdown selection fluid
@@ -9,9 +9,8 @@ export default class FastaSelection extends Component {
                       placeholder={this.props.placeholder}
                       name={this.props.name}
                       onChange={this.props.onChange}
-                      options={this.props.fastaDatabases} />
+                      options={this.props.GenomeList} />
         )
     }
 }
-
 

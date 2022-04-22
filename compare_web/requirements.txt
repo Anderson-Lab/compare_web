@@ -33,3 +33,4 @@ whitenoise==6.0.0
 yarl==1.7.2
 pandas==1.2.1
 openpyxl==3.0.9
+requests==2.27.1

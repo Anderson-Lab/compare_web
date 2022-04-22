@@ -1,27 +1,32 @@
 import React, {Component} from "react";
 import {Button, Container, Divider, Header, Segment} from "semantic-ui-react";
-import FastaSelection from "./FastaSelection";
+import FastaSelection from "./ChromosomeSelection";
 import FileSelection from "./FileSelection";
 import {CreateStreamlineJob, GetAvailableDatabases} from "./apis/backend";
+import GenomeSelection from "./GenomeSelection";
+import ChromosomeSelection from "./ChromosomeSelection";
 
 export default class NewStreamline extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+
             referenceGenome: '',
             referenceChromosome: '',
             fastaFile: null,
             loading : false,
-            fastaDatabases : [],
-            fastaLoaded : false,
+            GenomeList : [{key: "hg19", text: "hg19", value:"hg19"}],
+            ChromosomeList : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22, "X", "Y"],
+            fastaLoaded : true,
             mode : 'existing'
         }
     }
 
     setMode = (mode) => this.setState({mode})
 
-    onFastaChange = (e, {value, name}) => this.setState({[name]: value})
+    onChromosomeChange = (e, {value, name}) => this.setState({[name]: value, referenceChromosome: value})
+    onGenomeChange = (e, {value, name}) => this.setState({[name]: value, referenceGenome: value})
     onFileChange = (file) => this.setState({'fastaFile': file})
 
     createStreamline = () => this.setState({loading : true},
@@ -31,10 +36,12 @@ export default class NewStreamline extends Component {
                 }))
 
     componentDidMount() {
-        GetAvailableDatabases().then(databases => this.setState({
-            fastaDatabases : databases.map(db => ({key : db.name, text : db.name, value : db.filename})),
-            fastaLoaded : true
-        }))
+
+     this.setState({
+
+            ChromosomeList :  this.state.ChromosomeList.map(db => ({key : db, text : db, value : db}))
+
+        })
     }
 
     render() {
@@ -48,22 +55,26 @@ export default class NewStreamline extends Component {
 
                   <Segment>
                         <Header content='Select a Genome' dividing color='purple' size='small'/>
-                        <FastaSelection name='Genome' onChange={this.onFastaChange} placeholder='Genome'
-                                        fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
+                        <GenomeSelection name='Genome' onChange={this.onGenomeChange} placeholder='Genome'
+                                        fastaLoaded={this.state.fastaLoaded} GenomeList={this.state.GenomeList}/>
 
                         <Header content='Select a Chromosome' dividing color='purple' size='small'/>
-                        <FastaSelection name='Chromosome' onChange={this.onFastaChange} placeholder='Chromosome'
-                                        fastaLoaded={this.state.fastaLoaded} fastaDatabases={this.state.fastaDatabases}/>
+                        <ChromosomeSelection name='Chromosome' onChange={this.onChromosomeChange} placeholder='Chromosome'
+                                        fastaLoaded={this.state.fastaLoaded} ChromosomeList={this.state.ChromosomeList}/>
                     </Segment>
                 <Divider hidden/>
 
                 <Button size='large' color='blue' content='Streamline!' icon='rocket' fluid
                         loading={this.state.loading}
                         onClick={this.createStreamline}
-                        disabled={this.state.fastaFile == null
-                        || !this.state.referenceGenome || !this.state.referenceChromosome}/>
+                       />
 
             </Segment>
         )
     }
+
+
+
+     // disabled={this.state.fastaFile == null
+     //                    || !this.state.referenceGenome || !this.state.referenceChromosome}
 }
