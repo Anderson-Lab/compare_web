@@ -42,14 +42,14 @@ def blast(job_id):
 
     try:   
         streamline_job.started_status()
-        identifications, genome, chromosome = streamline_job.get_blast_files()
+        fasta, genome, chromosome = streamline_job.get_blast_files()
 
-        print(f'using |{identifications}| |{genome}| |{chromosome}|')
+        print(f'using |{fasta}| |{genome}| |{chromosome}|')
 
         os.system("mkdir temp")
-        os.system("java -Xmx4g -jar FlashFry-assembly-1.12.jar index --tmpLocation ./temp --database {genome} --reference {chromosome}")
+        os.system("java -Xmx4g -jar FlashFry-assembly-1.12.jar index --tmpLocation ./temp --database chr22 --reference chr22.fa.gz")
         # output file format: contig start stop target context overflow orientation OTCount off-targets(remove everything after the underscore)
-        os.system("java -Xmx4g -jar FlashFry-assembly-1.12.jar discover --database {genome} --fasta {identifications} --output flashfry.output") 
+        os.system("java -Xmx4g -jar FlashFry-assembly-1.12.jar discover --database chr22 --fasta {fasta} --output flashfry.output") 
 
         # do pipeline stuff
         f = open("flashfry.output", "r")
@@ -70,44 +70,32 @@ def blast(job_id):
 
             write_file = open('output-json-dump.txt', 'w')
             output = []
-            counter = 0
-            with open(output_file, newline='') as csvfile:
-                reader = csv.reader(csvfile, delimiter = '\t')
-                for row in reader:
-                    if counter >= 10:
-                        break
-                    if row[0][0] == "#" or 'guide' in row[2]:  # ignore headers
-                        pass
-                    else:
-                        offtarget = row[3]
-                        chrom = row[8]
-                        start = row[9]
-                        end = row[10]
-                        api_url = "https://api.genome.ucsc.edu/getData/track?genome=" + genome + ";track=" + track + ";chrom=" + chromosome + ";start=" + start + ";end=" + end + ""
-                        response = requests.get(api_url)
-                        output_dump = response.json()
-                        try:
-                            output_dump["statusCode"]
-                        except:
-                            if output_dump["clinvarMain"] != []:
-                                for mutations in output_dump["clinvarMain"]:
-                                    print(mutations)
-                                    if mutations["clinSign"].lower().find("benign") != -1 or mutations["clinSign"].lower().find("uncertain") != -1:
-                                        pass
-                                    else:
-                                        print(json.dumps(mutations))
-                                        output.append(mutations)
-                                        try:
-                                            if ot_dict[offtarget] is None:
-                                                print(output_dump)
-                                            ot_dict[offtarget] = ot_dict[offtarget].append(mutations)
-                                            counter += 1
-                                        except:
-                                            try:
-                                                ot_dict[offtarget] = [mutations]
-                                                counter += 1
-                                            except:
-                                                print(mutations)
+            # counter = 0
+            api_url = "https://api.genome.ucsc.edu/getData/track?genome=" + genome + ";track=" + track + ";chrom=" + chromosome + ";start=" + start + ";end=" + end + ""
+            response = requests.get(api_url)
+            output_dump = response.json()
+            try:
+                output_dump["statusCode"]
+            except:
+                if output_dump["clinvarMain"] != []:
+                    for mutations in output_dump["clinvarMain"]:
+                        print(mutations)
+                        if mutations["clinSign"].lower().find("benign") != -1 or mutations["clinSign"].lower().find("uncertain") != -1:
+                            pass
+                        else:
+                            print(json.dumps(mutations))
+                            output.append(mutations)
+                            # try:
+                            #     if ot_dict[offtarget] is None:
+                            #         print(output_dump)
+                            #     ot_dict[offtarget] = ot_dict[offtarget].append(mutations)
+                            #     counter += 1
+                            # except:
+                            #     try:
+                            #         ot_dict[offtarget] = [mutations]
+                            #         counter += 1
+                            #     except:
+                            #         print(mutations)
 
 
         # take a look at db blaster stuff
