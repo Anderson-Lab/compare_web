@@ -11,7 +11,7 @@ click==8.0.3
 click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
-Django==4.0.1
+Django==4.0.4
 django-cors-headers==3.11.0
 frozenlist==1.2.0
 idna==3.3
