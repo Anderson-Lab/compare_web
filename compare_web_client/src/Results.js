@@ -9,13 +9,13 @@ const ResultsPage = () => {
     const res3 = {ClinicalSignificance: "Pathogenic", VarianceType: "Deletion", AssociatedPhenotypes:"Early Infantile Epileptic Encephalopathy with bursts", Links: "NCBI | OMIM | Orphanet"};
     const results = [res, res2, res3]
 
-    const resultRows = vehicles.map((results) => (
-        <ResultRow CS={results.ClinicalSignificance} VT={results.VarianceType} AP={results.AssociatedPhenotypes}  Links = {results.Links}/>
+    const resultRows = results.map((res) => (
+        <ResultRow CS={res.ClinicalSignificance} VT={res.VarianceType} AP={res.AssociatedPhenotypes}  Links = {res.Links}/>
       ));
     return (
         <Segment raised padded>
 
-            <Header content='Crispr Streamline' size='large' color='blue'/>
+            <Header content='Phenotype Results' size='large' color='blue'/>
 
             <Table celled structured >
                 <Table.Header>
