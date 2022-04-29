@@ -3,6 +3,7 @@ import {Container, Divider, Grid, Header} from "semantic-ui-react";
 import NewStreamline from "./NewStreamline";
 import { Route, Routes } from "react-router-dom";
 import Job from "./Job";
+import ResultsPage from "./Results";
 export default class App extends Component {
 
   render() {
@@ -21,6 +22,7 @@ export default class App extends Component {
                         <Routes>
                             <Route path='/' element={<NewStreamline />}/>
                             <Route path='/job/:jobId' element={<Job />}/>
+                            <Route path='/results' element={<ResultsPage results={'hi'} />}/>
                         </Routes>
 
                     </Grid.Column>

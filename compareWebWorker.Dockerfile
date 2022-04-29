@@ -7,17 +7,20 @@ FROM openjdk:16-alpine3.13
 RUN mkdir -p flashfry/tmp
 
 RUN wget https://github.com/mckennalab/FlashFry/releases/download/1.12/FlashFry-assembly-1.12.jar
-RUN wget https://raw.githubusercontent.com/aaronmck/FlashFry/master/test_data/quickstart_data.tar.gz
 
 RUN mv FlashFry-assembly-1.12.jar /flashfry
-RUN mv quickstart_data.tar.gz /flashfry
 
-RUN tar xf /flashfry/quickstart_data.tar.gz
+#test that flashfry works properly, commented out b/c Docker builds FlashFry properly
 
-#test that flashfry works properly
-RUN java -Xmx4g -jar /flashfry/FlashFry-assembly-1.12.jar index --tmpLocation /flashfry/tmp --database chr22_cas9ngg_database --reference chr22.fa.gz --enzyme spcas9ngg
+# RUN wget https://raw.githubusercontent.com/aaronmck/FlashFry/master/test_data/quickstart_data.tar.gz
 
-RUN java -Xmx4g -jar /flashfry/FlashFry-assembly-1.12.jar discover --database chr22_cas9ngg_database --fasta EMX1_GAGTCCGAGCAGAAGAAGAAGGG.fasta --output EMX1.output
+# RUN mv quickstart_data.tar.gz /flashfry
+
+# RUN tar xf /flashfry/quickstart_data.tar.gz
+
+# RUN java -Xmx4g -jar /flashfry/FlashFry-assembly-1.12.jar index --tmpLocation /flashfry/tmp --database chr22_cas9ngg_database --reference chr22.fa.gz --enzyme spcas9ngg
+
+# RUN java -Xmx4g -jar /flashfry/FlashFry-assembly-1.12.jar discover --database chr22_cas9ngg_database --fasta EMX1_GAGTCCGAGCAGAAGAAGAAGGG.fasta --output EMX1.output
 
 FROM python:3
 

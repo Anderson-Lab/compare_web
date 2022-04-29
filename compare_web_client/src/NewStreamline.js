@@ -24,16 +24,17 @@ export default class NewStreamline extends Component {
     }
 
     setMode = (mode) => this.setState({mode})
-
+    onButtonClick = () => {
+        this.setState({loading : true},
+            () => CreateStreamlineJob(this.state.referenceGenome, this.state.referenceChromosome, this.state.fastaFile)
+               )
+        console.log("button clicked")
+    }
     onChromosomeChange = (e, {value, name}) => this.setState({[name]: value, referenceChromosome: value})
     onGenomeChange = (e, {value, name}) => this.setState({[name]: value, referenceGenome: value})
     onFileChange = (file) => this.setState({'fastaFile': file})
 
-    createStreamline = () => this.setState({loading : true},
-            () => CreateStreamlineJob(this.state.referenceGenome, this.state.referenceChromosome, this.state.fastaFile)
-                .then(result => {
-
-                }))
+    //createStreamline = () =>
 
     componentDidMount() {
 
@@ -66,7 +67,7 @@ export default class NewStreamline extends Component {
 
                 <Button size='large' color='blue' content='Streamline!' icon='rocket' fluid
                         loading={this.state.loading}
-                        onClick={this.createStreamline}
+                        onClick={this.onButtonClick}
                        />
 
             </Segment>

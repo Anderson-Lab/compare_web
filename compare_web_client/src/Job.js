@@ -18,7 +18,7 @@ class Job extends Component {
 
     getStatus = () => GetJobStatus(this.props.params.jobId).then(response => {
         if (!response.complete)
-            setTimeout(this.getStatus, 30000)
+            setTimeout(this.getStatus, 100)
 
         this.setState({
             loading : false,
@@ -27,6 +27,7 @@ class Job extends Component {
             complete : response.complete,
             success : response.success
         })
+
     })
 
     startNewJob = () => {

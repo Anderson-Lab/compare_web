@@ -73,7 +73,7 @@ def check_job_status(request):
       return JsonResponse({
          'status' : "Unknown",
          'message' : e.message,
-         'complete' : '',
+         'complete' : False,
          'success' : '',
       })
 
