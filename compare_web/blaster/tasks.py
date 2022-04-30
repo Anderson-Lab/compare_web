@@ -49,7 +49,7 @@ def blast(job_id):
         os.system("mkdir temp")
         os.system("java -Xmx4g -jar FlashFry-assembly-1.12.jar index --tmpLocation ./temp --database chr22 --reference chr22.fa.gz")
         # output file format: contig start stop target context overflow orientation OTCount off-targets(remove everything after the underscore)
-        os.system("java -Xmx4g -jar FlashFry-assembly-1.12.jar discover --database chr22 --fasta {fasta} --output flashfry.output") 
+        os.system("java -Xmx4g -jar FlashFry-assembly-1.12.jar discover --database chr22 --fasta {fasta} --output flashfry.output")
 
         # do pipeline stuff
         f = open("flashfry.output", "r")

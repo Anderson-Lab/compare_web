@@ -11,20 +11,22 @@ import traceback
 
 @csrf_exempt
 def create_streamline_job(request):
-   try:
 
+   try:
+      print("Ref Genome: " + request.POST['referenceGenome'])
+      print("Ref Chr: " + request.POST['referenceChromosome'])
+      print(request.FILES['fastaFile'])
       if request.method == 'POST' and 'fastaFile' in request.FILES:
          # create job id
          streamline_job = job.Job()
-         
          # save files to job directory
          streamline_job.create_directory()
          # todo: validate files
          # set which databse files to use
          streamline_job.set_database_files(request.POST['referenceGenome'], request.POST['referenceChromosome'])
          # save the identification file
-         streamline_job.save_identifications_file(request.FILES['fastaFile'])
-         
+         s = streamline_job.save_identifications_file(request.FILES['fastaFile'])
+         print(s)
          # queue job task
          tasks.blast.apply_async(args=[streamline_job.job_id])
          streamline_job.queued_status()

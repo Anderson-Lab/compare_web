@@ -14,6 +14,7 @@ services:
     volumes:
       - ./data_directory:/data_directory
       - ./refseq_databases:/fasta_files
+      - ./compare_web:/app
     depends_on:
       - rabbit
       - celeryworker

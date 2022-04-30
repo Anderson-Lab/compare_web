@@ -13,9 +13,9 @@ COPY compare_web/requirements.txt /app/
 RUN python -m pip install -r /app/requirements.txt
 
 # copy django application
-COPY compare_web/ /app
+#COPY compare_web/ /app
 # overwrite settings file with prodcution settings file
-COPY compare_web/compare_web/settings_production.py /app/compare_web/settings.py
+#COPY compare_web/compare_web/settings_production.py /app/compare_web/settings.py
 
 # application entry point
 CMD [ "python", "./manage.py", "runserver", "0.0.0.0:80"] 
