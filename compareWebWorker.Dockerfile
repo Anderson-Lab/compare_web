@@ -11,12 +11,22 @@ RUN apt-get update
 #RUN apt-get install oracle-java8-installer
 #RUN apt-get install openjdk-8-jdk
 RUN apt-get install -y default-jre
+RUN apt-get install -y rsync
+RUN apt-get install -y vim-tiny
 
 WORKDIR /app
 
 RUN mkdir -p flashfry/tmp
 
 RUN wget https://github.com/mckennalab/FlashFry/releases/download/1.12/FlashFry-assembly-1.12.jar
+
+RUN mkdir chromosomes
+
+WORKDIR /app/chromosomes
+RUN rsync -avzP rsync://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/ .
+
+WORKDIR /app
+RUN chmod a+rwx /app/
 
 # RUN mv FlashFry-assembly-1.12.jar /flashfry
 

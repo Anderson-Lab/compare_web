@@ -35,7 +35,7 @@ export async function GetJobStatus(jobId) {
 
         formData.append('job_id', jobId)
 
-        console.log(formData)
+        // console.log(formData)
 
         let response = await axios.post("http://localhost:9011/crisprstreamlineapi/check_job_status", formData)
 

@@ -17,7 +17,7 @@ class Job:
    genome_filename = ''
    chromosome_filename = ''
 
-   identifications_filename = 'fastaFile.txt'
+   identifications_filename = 'fastaFile.fasta'
    subset_filename = 'subset.fasta'
 
    status = ''
@@ -52,6 +52,7 @@ class Job:
       try:
          fs = FileSystemStorage(location=self._job_directory()) 
          fs.save(self.identifications_filename, identifications_file)
+         print("save_identifications file "+self._job_directory())
          return True
       except Exception as e:
          return False
@@ -66,7 +67,7 @@ class Job:
       identifications = self._job_directory() + '/' + Job.identifications_filename
       genome = Job.fasta_directory+'/'+self.genome_filename
       chromosome = Job.fasta_directory+'/'+self.chromosome_filename
-
+      print("identification "+identifications)
       return (identifications, genome, chromosome)
 
    # TODO: Maybe remove this.

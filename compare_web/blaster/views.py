@@ -28,7 +28,7 @@ def create_streamline_job(request):
          s = streamline_job.save_identifications_file(request.FILES['fastaFile'])
          print(s)
          # queue job task
-         tasks.blast.apply_async(args=[streamline_job.job_id])
+         tasks.streamline.apply_async(args=[streamline_job.job_id])
          streamline_job.queued_status()
 
       else :

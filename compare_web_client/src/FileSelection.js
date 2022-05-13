@@ -35,7 +35,10 @@ export default class FileSelection extends Component {
         this.useFile(file)
     }
 
-    useFile = (file) => this.setState({'fastaFile': file, 'fileName': file.name}, this.props.onChange(file))
+    useFile = (file) => {
+        this.setState({'fastaFile': file, 'fileName': file.name}, this.props.onChange(file))
+        console.log(this.state.fileName)
+    }
 
     remove = (e) => {
         this.setState({'fastaFile': null, 'fileName': ''})
