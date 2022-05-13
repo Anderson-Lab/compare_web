@@ -31,7 +31,7 @@ class Job extends Component {
     })
 
     startNewJob = () => {
-        window.location.href = '/'
+        window.location.href = '/crisprstreamline'
     }
 
     downloadAsXml = () => DownloadResults(this.props.params.jobId, 'xml')

@@ -18,6 +18,7 @@ export async function CreateStreamlineJob(referenceGenome, referenceChromosome, 
         if (response.data.success) {
             let job_id = response.data['job_id']
             window.location.href = '/crisprstreamline/job/'+job_id
+            console.log(response.output)
             return true
         }
 
