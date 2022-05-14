@@ -76,24 +76,21 @@ class Job:
 
 
    # Actual results file after algorithm is run
-   def get_results_file(self, format='xml'):
-      if format == 'xml':
-         re_file_pattern = 'subset_vs_.*.xml'
+   def get_results_file(self, format='csv'):
+      if format == 'csv':
+         #re_file_pattern = 'subset_vs_.*.xml'
+         re_file_pattern = 'output-json-dump.csv'
       elif format == 'txt':
          #re_file_pattern = 'subset_vs_.*.txt'
          re_file_pattern = 'output-json-dump.txt'
       elif format == 'xlsx':
-         re_file_pattern = 'subset_vs_.*.txt' # we'll fix this later
+         #re_file_pattern = 'subset_vs_.*.txt' # we'll fix this later
+         re_file_pattern = 'output-json-dump.xlsx'
 
       dir = self._job_directory()
       for _, _, files in os.walk(dir):
          for file in files:
             if re.match(re_file_pattern, file):
-               if format == 'xlsx':
-                  import pandas as pd
-                  df = pd.read_csv(dir + '/' +file, skiprows=5, sep="\t", engine ='python', error_bad_lines=False)
-                  file = file.replace(".txt",".xlsx")
-                  df.to_excel(dir + '/' + file,index=False)
                return dir + '/' +file
 
    # Save all the inputted files to directory

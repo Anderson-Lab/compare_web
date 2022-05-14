@@ -34,10 +34,12 @@ def streamline(job_id):
         # get rid of slashes
         chromosome = chromosome[1:]
         genome = genome[1:]
-        output = []
-        path = streamline_job.job_data_directory + "/" + streamline_job.job_id +"/output-json-dump.txt"
-        write_file = open(path, 'w')
+        path = streamline_job.job_data_directory + "/" + streamline_job.job_id
+        txt_file = open(path+"/output-json-dump.txt", 'w')
+        csv_file = open(path + '/output-json-dump.csv', 'w', newline='')
+        csv_writer = csv.writer(csv_file)
         counter = 0
+        headerBool = True
         while counter < 1:
             line = line.split()
             start = line[1]
@@ -62,12 +64,32 @@ def streamline(job_id):
                     for mutation in mutations:
                         print("mutation: " + mutation["clinSign"])
                         print(json.dumps(mutation))
-                        output.append(mutation)
-                        write_file.write(json.dumps(mutation))
+                        json.dump(mutation, txt_file, indent=4)
+                        if headerBool == True:
+                            headerBool = False
+                            header = mutation.keys()
+                            csv_writer.writerow(header)
+                        hgvs = mutation["_jsonHgvsTable"]
+                        hgvs = hgvs[1:-1].split("]")
+                        for h in hgvs:
+                            h = h[3:]
+                            if h == "":
+                                pass
+                            else:
+                                copy_mutation = mutation.copy()
+                                copy_mutation["_jsonHgvsTable"] = h
+                                csv_writer.writerow(copy_mutation.values())
+                        #write_file.write(json.dumps(mutation))
             # end uncomment block
             line = f.readline()
             counter += 1
-        write_file.close()
+        txt_file.close()
+        csv_file.close()
+        import pandas as pd
+        df = pd.read_csv(path + '/output-json-dump.csv')
+        writer = pd.ExcelWriter(path + '/output-json-dump.xlsx')
+        df.to_excel(writer, index=None, header=True)
+        writer.save()
         print('finished streamline job')
         streamline_job.completed_status()
 
