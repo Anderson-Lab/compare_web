@@ -11,9 +11,7 @@ This application is a web hosted pipeline between [FlashFry](https://github.com/
    - Returns upload success and `job_id`
 2. `/check_job_status`
    - Payload contains `job_id`
-   - Returns job status1
-2. `/available_databases`
-   - Returns list of available fasta databases to blast with
+   - Returns job status
 3. `/results/<format>/<job_id>`
    - Payload contains `job_id`
    - Returns streamline results in either xml or txt
