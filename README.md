@@ -1,6 +1,6 @@
-# compare_web
+# CRISPR Streamline
 
-This application is a web hosted port of the [PAW_BLASTER](https://github.com/pwilmart/PAW_BLAST) blast application.
+This application is a web hosted pipeline between [FlashFry](https://github.com/mckennalab/FlashFry) and the [UCSC Genome Browser API](https://genome.ucsc.edu/).
 
 ### Backend Application Request Flow
 ** For devs **
@@ -16,11 +16,9 @@ This application is a web hosted port of the [PAW_BLASTER](https://github.com/pw
    - Returns list of available fasta databases to blast with
 3. `/results/<format>/<job_id>`
    - Payload contains `job_id`
-   - Returns blast results in either xml or txt
+   - Returns streamline results in either xml or txt
 
 ### Running
 
-_Checkout the PAW_BLAST Submodule_
-`git submodule update --init`
 _Run docker compose up_
 `docker-compose up -d --build`
