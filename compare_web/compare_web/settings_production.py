@@ -1,4 +1,5 @@
 # Celery settings
+import dotenv
 
 CELERY_BROKER_URL = 'amqp://guest:guest@rabbit:5672'
 

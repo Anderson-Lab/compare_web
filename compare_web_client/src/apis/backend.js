@@ -11,7 +11,7 @@ export async function CreateStreamlineJob(referenceGenome, referenceChromosome, 
     console.log(referenceGenome)
     try {
 
-        let response = await axios.post("http://localhost:9011/crisprstreamlineapi/create_streamline_job", formData, {
+        let response = await axios.post("http://"+window.location.hostname+":7011/crisprstreamlineapi/create_streamline_job", formData, {
             headers : { 'Content-Type': 'multipart/form-data' }
         })
 
@@ -38,7 +38,7 @@ export async function GetJobStatus(jobId) {
 
         // console.log(formData)
 
-        let response = await axios.post("http://localhost:9011/crisprstreamlineapi/check_job_status", formData)
+        let response = await axios.post("http://"+window.location.hostname+":7011/crisprstreamlineapi/check_job_status", formData)
 
         console.log(response.data)
 
@@ -55,7 +55,7 @@ export async function GetJobStatus(jobId) {
 /*TODO: Modify these functions so they reflect the nature of our outputs.*/
 export async function GetAvailableDatabases() {
     try {
-        let response = await axios.get("http://localhost:9011/crisprstreamlineapi/available_databases")
+        let response = await axios.get("http://"+window.location.hostname+":7011/crisprstreamlineapi/available_databases")
 
         console.log('available db response', response.data)
         return response.data.databases
@@ -67,6 +67,6 @@ export async function GetAvailableDatabases() {
 }
 
 export async function DownloadResults(jobId, format) {
-    let resultsUrl = `http://localhost:9011/crisprstreamlineapi/results/${format}/${jobId}`
+    let resultsUrl = `http://${window.location.hostname}:7011/crisprstreamlineapi/results/${format}/${jobId}`
     window.open(resultsUrl, '_blank')
 }

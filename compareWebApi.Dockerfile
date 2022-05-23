@@ -11,6 +11,7 @@ WORKDIR /app
 COPY compare_web/requirements.txt /app/
 # install pip requirements
 RUN python -m pip install -r /app/requirements.txt
+RUN pip install python-dotenv
 
 # copy django application
 #COPY compare_web/ /app

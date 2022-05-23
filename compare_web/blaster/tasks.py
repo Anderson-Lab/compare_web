@@ -11,6 +11,7 @@ import csv
 import sys
 import os
 import time
+import pandas as pd
 
 @shared_task
 def streamline(job_id):
@@ -35,12 +36,13 @@ def streamline(job_id):
         chromosome = chromosome[1:]
         genome = genome[1:]
         path = streamline_job.job_data_directory + "/" + streamline_job.job_id
-        txt_file = open(path+"/output-json-dump.txt", 'w')
-        csv_file = open(path + '/output-json-dump.csv', 'w', newline='')
+        txt_file = open(path+"/streamline-results.txt", 'w')
+        csv_file = open(path + '/streamline-results.csv', 'w', newline='')
         csv_writer = csv.writer(csv_file)
         counter = 0
         headerBool = True
-        while counter < 1:
+        while line:
+        #while counter < 1: #(TEST LINE)
             line = line.split()
             start = line[1]
             end = line[2]
@@ -79,17 +81,23 @@ def streamline(job_id):
                                 copy_mutation = mutation.copy()
                                 copy_mutation["_jsonHgvsTable"] = h
                                 csv_writer.writerow(copy_mutation.values())
-                        #write_file.write(json.dumps(mutation))
             # end uncomment block
             line = f.readline()
             counter += 1
         txt_file.close()
         csv_file.close()
-        import pandas as pd
-        df = pd.read_csv(path + '/output-json-dump.csv')
-        writer = pd.ExcelWriter(path + '/output-json-dump.xlsx')
-        df.to_excel(writer, index=None, header=True)
-        writer.save()
+        with open(path+"/streamline-results.txt", 'r') as read_obj:
+            first_char = read_obj.read(1)
+            if first_char:
+                # there is data to write
+                df = pd.read_csv(path + '/streamline-results.csv')
+                writer = pd.ExcelWriter(path + '/streamline-results.xlsx')
+                df.to_excel(writer, index=None, header=True)
+                writer.save()
+            else:
+                # there is no data to write
+                xlsx_file = open(path + "/streamline-results.xlsx", 'w')
+                xlsx_file.close()
         print('finished streamline job')
         streamline_job.completed_status()
 

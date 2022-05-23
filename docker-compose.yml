@@ -4,13 +4,13 @@ services:
       context: .
       dockerfile: compareWebClient.Dockerfile
     ports:
-      - "9012:80"
+      - "7012:80"
   api:
     build:
       context: .
       dockerfile: compareWebApi.Dockerfile
     ports:
-      - "9011:80"
+      - "7011:80"
     volumes:
       - ./data_directory:/data_directory
       - ./refseq_databases:/fasta_files
@@ -21,7 +21,7 @@ services:
   rabbit:
     image: 'rabbitmq'
     ports:
-      - "5672:5672"
+      - "7672:5672"
   celeryworker:
     build:
       context: .

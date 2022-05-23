@@ -79,13 +79,13 @@ class Job:
    def get_results_file(self, format='csv'):
       if format == 'csv':
          #re_file_pattern = 'subset_vs_.*.xml'
-         re_file_pattern = 'output-json-dump.csv'
+         re_file_pattern = 'streamline-results.csv'
       elif format == 'txt':
          #re_file_pattern = 'subset_vs_.*.txt'
-         re_file_pattern = 'output-json-dump.txt'
+         re_file_pattern = 'streamline-results.txt'
       elif format == 'xlsx':
          #re_file_pattern = 'subset_vs_.*.txt' # we'll fix this later
-         re_file_pattern = 'output-json-dump.xlsx'
+         re_file_pattern = 'streamline-results.xlsx'
 
       dir = self._job_directory()
       for _, _, files in os.walk(dir):

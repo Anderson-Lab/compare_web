@@ -1,5 +1,6 @@
 from django.test import TestCase
 import requests
+import django.http as request
 
 # Create your tests here.
 class YourTestClass(TestCase):
@@ -21,14 +22,14 @@ class YourTestClass(TestCase):
         self.assertTrue(False)
 
     def test_one_plus_one_equals_two(self):
-        response = self.client.post('http://localhost:9012/crisprstreamline')
+        response = self.client.post('http://'+ request.path +':7012/crisprstreamline')
         self.assertRedirects(response, '/posts/', status_code=200,
                                   target_status_code=200)
     def test_fasta(self):
         referenceChromosome = '22'
         referenceGenome = 'hg19'
         fastaFile = 'E:/flashfry/EMX1_GAGTCCGAGCAGAAGAAGAAGGG.fasta'
-        r = requests.get('http://localhost:9011/crisprstreamlineapi/create_streamline_job')
+        r = requests.get('http://'+ request.path +':7011/crisprstreamlineapi/create_streamline_job')
         print(r.json())
     #
     # def test_update_password_view(self):

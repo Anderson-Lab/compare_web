@@ -5,6 +5,8 @@ RUN apt-get update
 RUN apt-get install -y default-jre
 RUN apt-get install -y rsync
 RUN apt-get install -y vim-tiny
+#RUN apt-get install -y python-dotenv
+RUN pip install python-dotenv
 
 WORKDIR /app
 

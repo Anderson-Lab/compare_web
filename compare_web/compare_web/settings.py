@@ -1,5 +1,5 @@
 # Celery settings
-import decouple
+# import decouple [commented because unused and breaking build]
 
 CELERY_BROKER_URL = 'amqp://guest:guest@rabbit:5672'
 
@@ -44,7 +44,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
-SECURE_HSTS_SECONDS = 0
+#SECURE_HSTS_SECONDS = 0
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
