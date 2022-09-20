@@ -3,7 +3,8 @@ FROM python:3
 
 # setup blast
 # download blast executable
-RUN curl https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.12.0+-x64-linux.tar.gz | tar xzf -
+#RUN curl https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.12.0+-x64-linux.tar.gz | tar xzf -
+RUN curl https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.12.0/ncbi-blast-2.12.0+-x64-linux.tar.gz | tar xzf -
 # RUN cd ncbi-blast-2.12.0+
 RUN mkdir -p /usr/local/ncbi/blast/bin/
 RUN mv /ncbi-blast-2.12.0+/bin/* /usr/local/ncbi/blast/bin/

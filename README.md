@@ -1,4 +1,4 @@
-# compare_web
+# MasterBlaster
 
 This application is a web hosted port of the [PAW_BLASTER](https://github.com/pwilmart/PAW_BLAST) blast application.
 
@@ -24,3 +24,7 @@ _Checkout the PAW_BLAST Submodule_
 `git submodule update --init`
 _Run docker compose up_
 `docker-compose up -d --build`
+
+### NIST
+Disclaimer: Identification of certain commercial equipment, instruments, software, or materials does not imply recommendation or endorsement by the National Institute of Standards and Technology, nor does it imply that the products identified are necessarily the best available for the purpose.
+
