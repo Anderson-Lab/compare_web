@@ -26,6 +26,10 @@ export default class App extends Component {
                     </Grid.Column>
                     <Grid.Column width={2}/>
                 </Grid>
+
+                <div className='title'>
+                    <Header content='Disclaimer: Identification of certain commercial equipment, instruments, software, or materials does not imply recommendation or endorsement by the National Institute of Standards and Technology, nor does it imply that the products identified are necessarily the best available for the purpose.' inverted />
+                </div>
             </Container>
         </div>
     )
