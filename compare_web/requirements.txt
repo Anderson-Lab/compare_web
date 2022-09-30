@@ -15,7 +15,7 @@ Django==4.0.1
 django-cors-headers==3.11.0
 frozenlist==1.2.0
 idna==3.3
-joblib==1.1.0
+joblib==1.2.0
 kombu==5.2.3
 multidict==5.2.0
 nltk==3.6.7
